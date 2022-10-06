@@ -92,7 +92,11 @@ def read_iso_codes(fl=None):
     return df
 ```
 
-Filter PRIMAP data
+Filter PRIMAP data. 
+- `entity` is the the gas in `CO2e`. CO2 is the default entity.
+- `category` is the IPCC 2006 category for emission. decault is `M.0.EL`, which is National Total emissions excluding LULUCF.
+- `scenario` is either HISTCR or HISTTP. default is `HISTCR`, in this scenario country-reported data is prioritized over third-party data.
+- 
 ```python
 
 def filter_primap(df=None, entity=None, category=None, scenario=None):    
