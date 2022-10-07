@@ -1,4 +1,5 @@
 import pandas as pd
+import csv
 
 def read_iso_codes(fl=None):
     ''' read iso codes 
@@ -168,6 +169,42 @@ def filter_primap(df=None, entity=None, category=None, scenario=None):
     return df.loc[filt]
 
 
+# TODO: this needs to be generalized 
+
+def create_publisher_csv():
+    ''' create publisher csv for primap '''
+    publisherDict = {
+        'id': 'PRIMAP',
+        'name': 'Potsdam Realtime Integrated Model for probabilistic Assessment of emissions Path',
+        'URL': 'https://zenodo.org/record/5494497' 
+    }
+
+    with open('./Publisher.csv', 'w') as f:  # You will need 'wb' mode in Python 2.x
+        w = csv.DictWriter(f, publisherDict.keys())
+        w.writeheader()
+        w.writerow(publisherDict)
+
+        
+# TODO: this needs to be generalized 
+
+def create_methodology_csv():
+    ''' create methodology csv for primap '''
+    publisher = 'PRIMAP'
+    doi = '10.5281/zenodo.5494497'
+    version = 'v2.3.1'
+
+    methodologyDict = {
+        "methodology_id": f'{publisher}:{doi}:{version}:methodology',
+        "name": 'NONE',
+        "methodology_link": 'https://essd.copernicus.org/articles/8/571/2016/'
+    }
+
+    with open('./Methodology.csv', 'w') as f:  # You will need 'wb' mode in Python 2.x
+        w = csv.DictWriter(f, methodologyDict.keys())
+        w.writeheader()
+        w.writerow(methodologyDict)
+        
+        
 def harmonize_primap():
     '''harmonize primap dataset
     
@@ -205,7 +242,7 @@ def harmonize_primap():
     # columns to unpivot
     value_vars = [val for val in list(df_wide.columns) if val.isdigit()]
     var_name = "year"     # new column name with {value_vars}
-    value_name = "total_emissions"  # new column name with values
+    value_name = "emissions"  # new column name with values
 
     # Unpivot (melt) a DataFrame from wide to long format
     df_merged_long = df_wide.melt(id_vars=id_vars, 
@@ -214,14 +251,99 @@ def harmonize_primap():
                             value_name=value_name)
 
     # rename columns 
-    df_out = df_merged_long.rename(columns={'scenario (PRIMAP-hist)':'scenario',
+    df = df_merged_long.rename(columns={'scenario (PRIMAP-hist)':'scenario',
           'Alpha-3 code': 'identifier',
           'category (IPCC2006_PRIMAP)': 'category',
            'English short name':'name',
            'French short name': 'name_french',
-          'Alpha-2 code': 'actor_id'})
+           'Alpha-2 code': 'actor_id'})
 
-    # uncomment to drop un-needed columns
-    #df_out = df_out.drop(columns=['Numeric', 'name_french'])
-        
-    return df_out
+    # convert year to int
+    df['year'] = df['year'].astype('int16')
+
+    # trim time
+    filt = (df['year']>=1850)
+    df = df.loc[filt]
+
+    # drop PRIMAP specific ISO codes 
+    # drop ANT ISO code as it's not in our database
+    isoCodesToDrop = [
+        'EARTH',
+        'ANNEXI',     
+        'NONANNEXI', 
+        'AOSIS',      
+        'BASIC',      
+        'EU27BX',    
+        'LDC',       
+        'UMBRELLA',
+        'ANT', # this ISO code is not in our database
+    ]
+
+    # filtered dataset
+    filt = ~ df['identifier'].isin(isoCodesToDrop)
+    df = df.loc[filt]
+
+    # filter where total emissions NaN
+    filt = ~df['emissions'].isna()
+    df = df.loc[filt]
+
+    # TODO: make these functions not dependdent on particular columns and try not to use .apply()
+    # and move them out from inside this function
+
+    def create_emission_id(row):  
+        return f"{row['source']}:{row['actor_id']}:{row['year']}"
+
+    def create_datasource_id(row, publisher, doi, version):
+         return f"{publisher}:{doi}:{version}"
+
+    def create_methodology_id(row, publisher, doi, version):
+        datasource_id = create_datasource_id(row, publisher, doi, version)
+        return f"{datasource_id}:methodology"
+
+    def gigagram_to_metric_ton(val):
+        ''' 1 gigagram = 1000 tonnes  '''
+        return val * 1000
+
+    df['emissions_id'] = df.apply(lambda row: create_emission_id(row), axis=1)
+
+    df['datasource_id'] = df.apply(lambda row: create_datasource_id(row, 
+                                                                    'PRIMAP', 
+                                                                    '10.5281/zenodo.5494497', 
+                                                                    'v2.3.1'), axis=1)
+
+    df['methodology_id'] = df.apply(lambda row: create_methodology_id(row, 
+                                                                    'PRIMAP', 
+                                                                    '10.5281/zenodo.5494497', 
+                                                                    'v2.3.1'), axis=1)
+
+    df['total_emissions'] = df['emissions'].apply(gigagram_to_metric_ton)
+
+    # Create EmissionsAgg table
+    emissionsAggColumns = ["emissions_id", 
+                          "actor_id", 
+                          "year", 
+                          "total_emissions",
+                          "methodology_id", 
+                          "datasource_id"]
+
+    df_emissionsAgg = df[emissionsAggColumns]
+
+    # ensure data has correct types
+    df_emissionsAgg = df_emissionsAgg.astype({'emissions_id': str,
+                                             'actor_id': str,
+                                             'year': int,
+                                             'total_emissions': int,
+                                             'methodology_id': str,
+                                             'datasource_id': str})
+
+    # sort colmns
+    df_emissionsAgg = df_emissionsAgg.sort_values(by=['actor_id', 'year'])
+
+    # convert to csv
+    df_emissionsAgg.to_csv('./EmissionsAgg.csv',index=False)
+
+    # creates methodology and publisher csv files
+    create_methodology_csv()
+    create_publisher_csv()
+
+    return df
