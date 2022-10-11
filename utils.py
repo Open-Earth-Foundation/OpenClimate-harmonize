@@ -178,7 +178,7 @@ def create_publisher_csv():
     publisherDict = {
         'id': 'PRIMAP',
         'name': 'Potsdam Realtime Integrated Model for probabilistic Assessment of emissions Path',
-        'URL': 'https://zenodo.org/record/5494497'
+        'URL': 'https://www.pik-potsdam.de/paris-reality-check/primap-hist/'
     }
 
     with open('./Publisher.csv', 'w') as f:  # You will need 'wb' mode in Python 2.x
