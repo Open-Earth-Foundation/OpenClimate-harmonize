@@ -280,8 +280,8 @@ def harmonize_primap():
     df['year'] = df['year'].astype('int16')
 
     # trim time
-    filt = (df['year'] >= 1850)
-    df = df.loc[filt]
+    #filt = (df['year'] >= 1850)
+    #df = df.loc[filt]
 
     # drop PRIMAP specific ISO codes
     # drop ANT ISO code as it's not in our database
