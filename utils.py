@@ -192,11 +192,11 @@ def create_publisher_csv():
 def create_methodology_csv():
     ''' create methodology csv for primap '''
     publisher = 'PRIMAP'
-    doi = '10.5281/zenodo.5494497'
+    #doi = '10.5281/zenodo.5494497'
     version = 'v2.3.1'
 
     methodologyDict = {
-        "methodology_id": f'{publisher}:{doi}:{version}:methodology',
+        "methodology_id": f'{publisher}:{version}:methodology',
         "name": 'PRIMAP methodology based on a compliation of multiple publicly available data sources',
         "methodology_link": 'https://essd.copernicus.org/articles/8/571/2016/'
     }
