@@ -57,7 +57,7 @@ def read_primap(fl=None):
     '''
     # set default path
     if fl is None:
-        fl = "https://zenodo.org/record/5494497/files/Guetschow-et-al-2021-PRIMAP-hist_v2.3.1_20-Sep_2021.csv"
+        fl = "https://zenodo.org/record/5494497/files/Guetschow-et-al-2021-PRIMAP-hist_v2.3.1_no_extrap_20-Sep_2021.csv"
 
     # read as pandas dataframe
     df = pd.read_csv(fl)
