@@ -314,9 +314,8 @@ def harmonize_primap():
     def create_datasource_id(row, publisher, doi, version):
         return f"{publisher}:{doi}:{version}"
 
-    def create_methodology_id(row, publisher, doi, version):
-        datasource_id = create_datasource_id(row, publisher, doi, version)
-        return f"{datasource_id}:methodology"
+    def create_methodology_id(row, publisher, version):
+        return f"{publisher}:{version}:methodology"
 
     def gigagram_to_metric_ton(val):
         ''' 1 gigagram = 1000 tonnes  '''
@@ -331,7 +330,6 @@ def harmonize_primap():
 
     df['methodology_id'] = df.apply(lambda row: create_methodology_id(row,
                                                                       'PRIMAP',
-                                                                      '10.5281/zenodo.5494497',
                                                                       'v2.3.1'), axis=1)
 
     df['total_emissions'] = df['emissions'].apply(gigagram_to_metric_ton)
