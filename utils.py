@@ -364,3 +364,169 @@ def harmonize_primap():
     create_datasource_csv()
 
     return df
+
+
+def harmonize_unfccc():
+    # TODO: pull out all the nested functions and refactor the code
+
+    # path to raw UNFCCC dataset
+    # download CO2 total without LULUCF from here: https://di.unfccc.int/time_series
+    fl = '/Users/gloege/Desktop/Time Series - CO₂ total without LULUCF, in kt.xlsx'
+
+    # read excel file into pandas
+    df = pd.read_excel(fl, skiprows=2, na_values=True)
+    df_tmp = df.copy()
+    first_row_with_all_NaN = df[df.isnull().all(
+        axis=1) == True].index.tolist()[0]
+    df = df.loc[0:first_row_with_all_NaN-1]
+    # print(df_tmp.loc[first_row_with_all_NaN:]['Party'])
+
+    # alternative names for countries in UNFCCC
+    alt_names = {
+        'United States of America (the)': ['United States of America'],
+        'Russian Federation (the)': ['Russian Federation'],
+        'United Kingdom of Great Britain and Northern Ireland (the)': ['United Kingdom of Great Britain and Northern Ireland'],
+        'Netherlands (the)': ['Netherlands'],
+    }
+
+    # replace alt_names with names in ISO-3166
+    for correctName in alt_names.keys():
+        filt = df['Party'].isin(alt_names[correctName])
+        df.loc[filt, 'Party'] = correctName
+
+    # read iso codes
+    df_iso = read_iso_codes()
+
+    # merge datasets (wide, each year is a column)
+    df_wide = pd.merge(df, df_iso, left_on=["Party"], right_on=[
+                       'English short name'], how="left")
+
+    # filter out null values in English short name
+    filt = df_wide['English short name'].notnull()
+    df_wide = df_wide.loc[filt]
+
+    # columns to use as identifiers
+    id_vars = [val for val in list(df_wide.columns) if not val.isdigit()]
+
+    # columns to unpivot
+    value_vars = [val for val in list(df_wide.columns) if val.isdigit()]
+    var_name = "year"     # new column name with {value_vars}
+    value_name = "emissions"  # new column name with values
+
+    # Unpivot (melt) a DataFrame from wide to long format
+    df_merged_long = df_wide.melt(id_vars=id_vars,
+                                  value_vars=value_vars,
+                                  var_name=var_name,
+                                  value_name=value_name)
+
+    # rename columns
+    df = df_merged_long.rename(columns={'Alpha-3 code': 'identifier',
+                                        'English short name': 'name',
+                                        'French short name': 'name_french',
+                                        'Alpha-2 code': 'actor_id'})
+
+    # convert year to int
+    df['year'] = df['year'].astype('int16')
+
+    def create_emission_id(row):
+        return f"UNFCCC-annex1-CO2:{row['actor_id']}:{row['year']}"
+
+    def create_datasource_id(row, publisher):
+        return f"{publisher}:annex1:20191108"
+
+    def create_methodology_id(row, publisher):
+        return f"{publisher}:methodology"
+
+    df['emissions_id'] = df.apply(lambda row: create_emission_id(row), axis=1)
+
+    df['datasource_id'] = df.apply(lambda row: create_datasource_id(row,
+                                                                    'UNFCC'), axis=1)
+
+    df['methodology_id'] = df.apply(lambda row: create_methodology_id(row,
+                                                                      'UNFCCC'), axis=1)
+
+    # 8 November 2019 <-- https://unfccc.int/topics/mitigation/resources/registry-and-data/ghg-data-from-unfccc
+
+    # CO₂ total without LULUCF, in kt
+    def kilotonne_to_metric_ton(val):
+        ''' 1 Kilotonne = 1000 tonnes  '''
+        return val * 1000
+
+    df['total_emissions'] = df['emissions'].apply(kilotonne_to_metric_ton)
+
+    # Create EmissionsAgg table
+    emissionsAggColumns = ["emissions_id",
+                           "actor_id",
+                           "year",
+                           "total_emissions",
+                           "methodology_id",
+                           "datasource_id"]
+
+    df_emissionsAgg = df[emissionsAggColumns]
+
+    # ensure data has correct types
+    df_emissionsAgg = df_emissionsAgg.astype({'emissions_id': str,
+                                             'actor_id': str,
+                                              'year': int,
+                                              'total_emissions': int,
+                                              'methodology_id': str,
+                                              'datasource_id': str})
+
+    # sort colmns
+    df_emissionsAgg = df_emissionsAgg.sort_values(by=['actor_id', 'year'])
+
+    # convert to csv
+    df_emissionsAgg.to_csv('./EmissionsAgg.csv', index=False)
+
+    # create publisher, methodology and datasource csv
+
+    def create_publisher_csv():
+        ''' create publisher csv for primap '''
+        publisherDict = {
+            'id': 'UNFCCC',
+            'name': 'The United Nations Framework Convention on Climate Change',
+            'URL': 'https://unfccc.int'
+        }
+
+        with open('./Publisher.csv', 'w') as f:  # You will need 'wb' mode in Python 2.x
+            w = csv.DictWriter(f, publisherDict.keys())
+            w.writeheader()
+            w.writerow(publisherDict)
+
+    def create_methodology_csv():
+        ''' create methodology csv for primap '''
+        publisher = 'UNFCCC'
+        #doi = '10.5281/zenodo.5494497'
+        version = '2019-11-08'
+
+        methodologyDict = {
+            "methodology_id": f'UNFCCC:2019-11-08:methodology',
+            "name": 'Countries which are Parties to the Convention submit national greenhouse gas (GHG) inventories to the Climate Change secretariat',
+            "methodology_link": 'https://unfccc.int/topics/mitigation/resources/registry-and-data/ghg-data-from-unfccc'
+        }
+
+        with open('./Methodology.csv', 'w') as f:  # You will need 'wb' mode in Python 2.x
+            w = csv.DictWriter(f, methodologyDict.keys())
+            w.writeheader()
+            w.writerow(methodologyDict)
+
+    def create_datasource_csv():
+        ''' create datasource csv for primap '''
+        datasourceDict = {
+            'datasource_id': 'UNFCCC:CO2_ANNEX1:2019-11-08',
+            'name': 'UNFCCC CO2 total without LULUCF, ANNEX I countries',
+            'publisher': 'UNFCCC',
+            'published': '2019-11-08',
+            'URL': 'https://di.unfccc.int/time_series'
+        }
+
+        with open('./DataSource.csv', 'w') as f:  # You will need 'wb' mode in Python 2.x
+            w = csv.DictWriter(f, datasourceDict.keys())
+            w.writeheader()
+            w.writerow(datasourceDict)
+
+    create_publisher_csv()
+    create_methodology_csv()
+    create_datasource_csv()
+
+    return None
