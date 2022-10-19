@@ -371,7 +371,7 @@ def harmonize_unfccc():
 
     # path to raw UNFCCC dataset
     # download CO2 total without LULUCF from here: https://di.unfccc.int/time_series
-    fl = '/Users/gloege/Desktop/Time Series - CO₂ total without LULUCF, in kt.xlsx'
+    fl = '/Users/gloege/Desktop/data/Time Series - CO₂ total without LULUCF, in kt.xlsx'
 
     # read excel file into pandas
     df = pd.read_excel(fl, skiprows=2, na_values=True)
@@ -435,7 +435,7 @@ def harmonize_unfccc():
         return f"{publisher}:annex1:20191108"
 
     def create_methodology_id(row, publisher):
-        return f"{publisher}:methodology"
+        return f"{publisher}:2019-11-08:methodology"
 
     df['emissions_id'] = df.apply(lambda row: create_emission_id(row), axis=1)
 
@@ -476,7 +476,8 @@ def harmonize_unfccc():
     df_emissionsAgg = df_emissionsAgg.sort_values(by=['actor_id', 'year'])
 
     # convert to csv
-    df_emissionsAgg.to_csv('./EmissionsAgg.csv', index=False)
+    df_emissionsAgg.to_csv(
+        './data_harmonized/UNFCCC/EmissionsAgg.csv', index=False)
 
     # create publisher, methodology and datasource csv
 
@@ -488,7 +489,8 @@ def harmonize_unfccc():
             'URL': 'https://unfccc.int'
         }
 
-        with open('./Publisher.csv', 'w') as f:  # You will need 'wb' mode in Python 2.x
+        # You will need 'wb' mode in Python 2.x
+        with open('./data_harmonized/UNFCCC/Publisher.csv', 'w') as f:
             w = csv.DictWriter(f, publisherDict.keys())
             w.writeheader()
             w.writerow(publisherDict)
@@ -505,7 +507,8 @@ def harmonize_unfccc():
             "methodology_link": 'https://unfccc.int/topics/mitigation/resources/registry-and-data/ghg-data-from-unfccc'
         }
 
-        with open('./Methodology.csv', 'w') as f:  # You will need 'wb' mode in Python 2.x
+        # You will need 'wb' mode in Python 2.x
+        with open('./data_harmonized/UNFCCC/Methodology.csv', 'w') as f:
             w = csv.DictWriter(f, methodologyDict.keys())
             w.writeheader()
             w.writerow(methodologyDict)
@@ -520,7 +523,8 @@ def harmonize_unfccc():
             'URL': 'https://di.unfccc.int/time_series'
         }
 
-        with open('./DataSource.csv', 'w') as f:  # You will need 'wb' mode in Python 2.x
+        # You will need 'wb' mode in Python 2.x
+        with open('./data_harmonized/UNFCCC/DataSource.csv', 'w') as f:
             w = csv.DictWriter(f, datasourceDict.keys())
             w.writeheader()
             w.writerow(datasourceDict)
