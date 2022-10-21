@@ -325,7 +325,7 @@ def create_all_eucom_tables():
     list_PublisherDicts = [{
         "id": "EUCoM",
         "name": "European Union Covenant of Mayors" ,
-        "URL": ""
+        "URL": "https://www.eumayors.eu/en/"
     },
     {
         "id": "EC-JRC",
@@ -345,7 +345,7 @@ def create_all_eucom_tables():
         "name":'European Union Covenant of Mayors 2022',
         "publisher":'EUCoM',
         "published": '2022',
-        "URL": ''
+        "URL": 'https://www.eumayors.eu/en/'
     },
     {
         "datasource_id":'GCoMEC:v2',
@@ -371,17 +371,17 @@ def create_all_eucom_tables():
 
     list_MethodologyDicts = [{
         "methodology_id": "EUCoM:methodology",
-        "name": "European Union Covenant of Mayors Methodology",
-        "methodology_link": ""
+        "name": "Common Reporting Framework",
+        "methodology_link": "https://www.globalcovenantofmayors.org/wp-content/uploads/2019/04/FINAL_Data-TWG_Reporting-Framework_website_FINAL-13-Sept-2018_for-translation.pdf"
     },
     {
         "methodology_id": "GCoMEC:methodology",
-        "name": "Global Covenant of Mayors - MyCovenant methodology",
+        "name": "Common Reporting Framework with additional checks by publishers",
         "methodology_link": "https://data.jrc.ec.europa.eu/dataset/9cefa6ca-1391-4bcb-a9c8-46e029cf99bb"
     },
     {
         "methodology_id": "GCoMH:methodology",
-        "name":"Global Covenant of Mayors harmonized methodology",
+        "name":"Common Reporting Framework with additional checks by publishers",
         "methodology_link": "https://essd.copernicus.org/articles/13/3551/2021/"
     }
     ]
