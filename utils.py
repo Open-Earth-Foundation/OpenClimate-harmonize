@@ -986,3 +986,73 @@ def create_eccc_ghgrp_facilities_emissions_table(DataSourceDict=None,
     
     return df_emissions
     
+
+    
+def create_eccc_nir_emissionsAgg(DataSourceDict=None, 
+                                           PublisherDict=None):
+    fl = '/Users/luke/Documents/work/data/Can_provinces/ghg-emissions-regional-en.csv'
+
+    df = pd.read_csv(fl, header=2, names=['province', '1990', '2005', '2020']) # MegaTonnes
+
+    changeDict = {
+        'Newfoundland and Labrador (NL)': 'CA-NL',
+        'Prince Edward Island (PE)': 'CA-PE',
+        'Nova Scotia (NS)': 'CA-NS',
+        'New Brunswick (NB)': 'CA-NB',
+        'Quebec (QC)': 'CA-QC',
+        'Ontario (ON)': 'CA-ON',
+        'Manitoba (MB)': 'CA-MB',
+        'Saskatchewan (SK)': 'CA-SK',
+        'Alberta (AB)': 'CA-AB',
+        'British Columbia (BC)': 'CA-BC',
+        'Yukon (YT)': 'CA-YT',
+        'Northwest Territories (NT)': 'CA-NT',
+        'Nunavut (NU)[A]': 'CA-NU',
+    }
+
+    df['province'] = df['province'].replace(changeDict)
+    df = df.rename(columns={'province':'actor_id'})
+
+    df = df[0:13]
+
+    # before 1999, CA-NU was part of CA-NT
+    df.loc[df['actor_id'] == 'CA-NT', '1990'] = 1.8
+
+    from utils import df_wide_to_long
+
+    df_out = df_wide_to_long(df=df, value_name='total_emissions')
+
+    df_out = df_out.dropna()
+
+    # convert to tonnes from megatones
+    df_out['total_emissions'] = (df_out['total_emissions'].astype(float) * 10**6).astype(int)
+
+    # get datasource_id from dataSource table
+    df_out['datasource_id'] = DataSourceDict['datasource_id']
+
+    df_out['methodology_id'] = MethodologyDict['methodology_id']
+
+    df_out['emissions_id'] = df_out.apply(lambda row: 
+                                      f"ECCC_NIR_2022:{row['actor_id']}:{row['year']}", 
+                                      axis=1)
+    
+    cols = [
+        "emissions_id",
+        "actor_id",
+        "year",
+        "total_emissions",
+        "methodology_id",
+        "datasource_id"
+    ]
+    df_out = df_out[cols]
+    
+    df_out = df_out.astype({
+        'emissions_id': str,
+        'actor_id': str,
+        'year': int,
+        'total_emissions': int,
+        'methodology_id': str,
+        'datasource_id': str
+    })
+        
+    return df_out
