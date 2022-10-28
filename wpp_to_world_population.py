@@ -12,7 +12,7 @@ DATASOURCE = {
     "name": "World Population Prospects 2022: Demographic indicators by region, subregion and country, annually for 1950-2100",
     "publisher": PUBLISHER["id"],
     "published": "2022-07-01",
-    "URL": "https://www.iso.org/standard/72482.html"
+    "URL": "https://population.un.org/wpp/Download/Standard/MostUsed/"
 }
 
 import csv
