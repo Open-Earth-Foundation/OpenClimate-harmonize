@@ -540,10 +540,14 @@ def remove_country_groups(df, column=None):
 
     
 # TODO: separate into primap specific file (?)
-def harmonize_primap_emissions(outputDir=None, 
+def harmonize_primap_emissions(fl=None,
+                               outputDir=None, 
                                tableName=None,
                                methodologyDict=None, 
-                               datasourceDict=None):
+                               datasourceDict=None,
+                               entity=None, 
+                               category=None, 
+                               scenario=None):
     '''harmonize primap dataset
 
     haramonize primap to conform to open cliamte schema
@@ -560,7 +564,17 @@ def harmonize_primap_emissions(outputDir=None,
     df: final dataframe with emissions info
     '''
     
+    # set default values
+    entity = 'KYOTOGHG (AR4GWP100)' if entity is None else entity
+    category = 'M.0.EL' if category is None else category
+    scenario = 'HISTCR' if scenario is None else scenario
+
+    # set default path
+    if fl is None:
+        fl = "https://zenodo.org/record/5494497/files/Guetschow-et-al-2021-PRIMAP-hist_v2.3.1_no_extrap_20-Sep_2021.csv"
+
     # ensure input types are correct
+    assert isinstance(fl, str), f"fl must be a string"
     assert isinstance(outputDir, str), f"outputDir must a be string"
     assert isinstance(tableName, str), f"tableName must be a string"
     assert isinstance(methodologyDict, dict), f"methodologyDict must be a dictionary"
@@ -578,8 +592,8 @@ def harmonize_primap_emissions(outputDir=None,
     df_iso = read_iso_codes()
     
     # read subset of primap
-    df_pri_tmp = read_primap()
-    df_pri = subset_primap(df_pri_tmp)
+    df_pri_tmp = read_primap(fl=fl)
+    df_pri = subset_primap(df_pri_tmp, entity=entity, category=category, scenario=scenario)
 
     # merge datasets
     df_merged = pd.merge(df_pri, df_iso, 
