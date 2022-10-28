@@ -610,7 +610,7 @@ def harmonize_primap_emissions(fl=None,
     df = filter_primap(df=df_long, identifier="iso3", emissions="emissions")
     
     # rename columns
-    df = df.rename(columns={'iso3': 'actor_id'})
+    df = df.rename(columns={'iso2': 'actor_id'})
 
     def gigagram_to_metric_ton(val):
         ''' 1 gigagram = 1000 tonnes  '''
