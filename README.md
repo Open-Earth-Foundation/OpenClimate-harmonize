@@ -15,7 +15,7 @@ if __name__ == "__main__":
     # where to create tables
     outputDir = "./data_emissions/country/PRIMAP/v2.4"
     
-    # PRIMPAP dataset
+    # PRIMAP dataset url
     fl=('https://zenodo.org/record/7179775/files/'
         'Guetschow-et-al-2022-PRIMAP-hist_v2.4_no_extrap_11-Oct-2022.csv?download=1')
 
