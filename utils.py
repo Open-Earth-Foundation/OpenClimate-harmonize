@@ -612,6 +612,10 @@ def harmonize_primap_emissions(fl=None,
     # rename columns
     df = df.rename(columns={'iso2': 'actor_id'})
 
+    # filter out ISO3 code ANT (netherland antilles)
+    filt = ~(df['area (ISO3)'] == 'ANT')
+    df = df.loc[filt]
+
     def gigagram_to_metric_ton(val):
         ''' 1 gigagram = 1000 tonnes  '''
         return val * 1000
