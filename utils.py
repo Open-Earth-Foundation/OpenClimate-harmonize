@@ -3,6 +3,7 @@ import csv
 import json
 import pandas as pd
 from pathlib import Path
+import pathlib
 import re
 import xlrd
 
@@ -1190,4 +1191,119 @@ def harmonize_unfccc_emissions(fl=None,
     # convert to csv
     df_emissionsAgg.to_csv(f'{out_dir}/{tableName}.csv', index=False)
     
+    return df_emissionsAgg 
+
+
+
+def df_columns_as_str(df=None):
+    df.columns = df.columns.astype(str)
+    return df
+
+def df_drop_nan_columns(df=None):
+    return df.loc[:, df.columns.notna()]
+
+def df_drop_unnamed_columns(df=None):
+    return df.loc[:, ~df.columns.str.contains('^Unnamed')]
+
+def read_eccc_ghg_inventory_fl(fl=None, province=None):
+    
+    assert isinstance(fl, pathlib.PurePath), (
+        f"{fl} is not a string or pathlib.PosixPath"
+    )
+    
+    # get province name from filename if not provided
+    if province is None:
+        # get province from stem of file
+        result = re.search(r"EN_GHG_IPCC_(.*)", fl.stem)
+        province = ''.join(result.groups()) 
+        
+        # change NT&NU combined to just NT
+        if province=='NT&NU':
+            province = 'NT'
+    
+    else:
+        assert isinstance(province, str), (
+            f"{province} is not type string"
+        )
+
+    # read raw dataset
+    df = pd.read_excel(fl, sheet_name='Summary', header=4)
+    df = df_columns_as_str(df)
+    df = df_drop_unnamed_columns(df)
+
+    # extract units
+    units = df.iloc[0,1]
+
+    # filter, only get total of all GHG cats
+    filt = df['Greenhouse Gas Categories'] == 'TOTAL'
+    df = df.loc[filt]
+
+    # convert from wide to long
+    df_long = df_wide_to_long(df=df, value_name='emissions', var_name='year')
+
+    # add province column
+    df_long['actor_id'] = f"CA-{province}"
+    df_long['units'] = units
+    
+    return df_long
+
+
+
+def harmonize_eccc_ghg_inventory(dataDir=None,                               
+                                 outputDir=None,
+                                 tableName=None,
+                                 datasourceDict=None):
+    
+    # output directory
+    out_dir = Path(outputDir).as_posix()
+    
+    # create out_dir if does not exist
+    make_dir(path=out_dir)
+    
+    assert isinstance(dataDir, str), f"dataDir must be a string"
+    assert isinstance(outputDir, str), f"outputDir must a be string"
+    assert isinstance(tableName, str), f"tableName must be a string"
+    assert isinstance(datasourceDict, dict), f"datasourceDict must be a dictionary"
+    
+    # get list of files
+    path = Path(dataDir)
+    files = sorted((path.glob('EN_GHG_IPCC_*.xlsx')))
+
+    # merge into one dataset, the provinces are being read the file name
+    # 
+    df_out = pd.concat([read_eccc_ghg_inventory_fl(fl=fl) for fl in files], ignore_index=True)
+
+    # convert emissions to tonnes
+    if set(df_out['units']) == {'kt CO2  eq'}:
+        df_out['emissions'] = df_out['emissions'] * 10**3
+        df_out = df_out.rename(columns={'emissions' : 'total_emissions'})
+
+    # create datasource and emissions id
+    df_out['datasource_id'] = datasourceDict['datasource_id']
+    df_out['emissions_id'] = df_out.apply(lambda row: 
+                                  f"ECCC_GHG_inventory:{row['actor_id']}:{row['year']}", 
+                                  axis=1)
+
+    # Create EmissionsAgg table
+    emissionsAggColumns = ["emissions_id", 
+                          "actor_id", 
+                          "year", 
+                          "total_emissions",
+                          "datasource_id"]
+
+    df_emissionsAgg = df_out[emissionsAggColumns]
+
+    # ensure data has correct types
+    df_emissionsAgg = df_emissionsAgg.astype({'emissions_id': str,
+                                             'actor_id': str,
+                                             'year': int,
+                                             'total_emissions': int,
+                                             'datasource_id': str})
+
+    # sort by actor_id and year
+    df_emissionsAgg = df_emissionsAgg.sort_values(by=['actor_id', 'year'])
+
+    # convert to csv
+    df_emissionsAgg.to_csv(f'{out_dir}/{tableName}.csv', index=False)
+
     return df_emissionsAgg 
