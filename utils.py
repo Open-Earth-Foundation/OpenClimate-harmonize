@@ -40,14 +40,14 @@ def get_fieldnames(tableName=None, schema_json=None):
     """
     
     if schema_json is None:
-        schema_json = './openClimate_schema.json'
+        schema_json = '/Users/luke/Documents/jupyterlab/OpenClimate/openClimate_schema.json'
     
     assert isinstance(schema_json, str), (
         f"schema_json must be a string; not a {type(schema_json)}"
     )
     
     # switcher stuff needs to be a JSON
-    switcher = read_json(fl='./openClimate_schema.json')
+    switcher = read_json(fl='/Users/luke/Documents/jupyterlab/OpenClimate/openClimate_schema.json')
     return switcher.get(tableName.lower(), f"{tableName} not in {list(switcher.keys())}")
 
 
@@ -216,10 +216,13 @@ def read_iso_codes(fl=None):
     return df
 
 
-def get_climactor_country():
+def get_climactor_country(fl=None):
     # open climactor
     #fl = 'https://raw.githubusercontent.com/datadrivenenvirolab/ClimActor/master/data-raw/country_dict_August2020.csv'
-    fl = '/Users/luke/Documents/work/data/ClimActor/country_dict_updated.csv'
+    
+    if fl is None:
+        fl = '/Users/luke/Documents/work/data/ClimActor/country_dict_updated.csv'
+        
     df = pd.read_csv(fl)
     df['right'] = df['right'].str.strip()
     df['wrong'] = df['wrong'].str.strip()
@@ -543,7 +546,6 @@ def remove_country_groups(df, column=None):
 def harmonize_primap_emissions(fl=None,
                                outputDir=None, 
                                tableName=None,
-                               methodologyDict=None, 
                                datasourceDict=None,
                                entity=None, 
                                category=None, 
@@ -556,7 +558,6 @@ def harmonize_primap_emissions(fl=None,
     ------
     outputDir: directory where table will be created
     tableName: name of the table to create
-    methodologyDict: dictionary with methodology info
     datasourceDict: dictionary with datasource info
 
     output
@@ -577,10 +578,9 @@ def harmonize_primap_emissions(fl=None,
     assert isinstance(fl, str), f"fl must be a string"
     assert isinstance(outputDir, str), f"outputDir must a be string"
     assert isinstance(tableName, str), f"tableName must be a string"
-    assert isinstance(methodologyDict, dict), f"methodologyDict must be a dictionary"
     assert isinstance(datasourceDict, dict), f"datasourceDict must be a dictionary"
     
-    # TODO add section to ensure methodologyDict and datasourceDict have correct keys
+    # TODO add section to ensure datasourceDict have correct keys
     
     # output directory
     out_dir = Path(outputDir).as_posix()
@@ -622,7 +622,6 @@ def harmonize_primap_emissions(fl=None,
     
     # create id columns
     df['datasource_id'] = datasourceDict['datasource_id']
-    df['methodology_id'] = methodologyDict['methodology_id']
     df['emissions_id'] = df.apply(lambda row: 
                                   f"{row['source']}:{row['actor_id']}:{row['year']}", 
                                   axis=1)
@@ -635,7 +634,6 @@ def harmonize_primap_emissions(fl=None,
                            "actor_id",
                            "year",
                            "total_emissions",
-                           "methodology_id",
                            "datasource_id"]
 
     df_emissionsAgg = df[emissionsAggColumns]
@@ -645,7 +643,6 @@ def harmonize_primap_emissions(fl=None,
                                               'actor_id': str,
                                               'year': int,
                                               'total_emissions': int,
-                                              'methodology_id': str,
                                               'datasource_id': str})
 
     # sort by actor_id and year
@@ -1074,3 +1071,123 @@ def create_eccc_nir_emissionsAgg(DataSourceDict=None,
     })
         
     return df_out
+
+
+def harmonize_unfccc_emissions(fl=None,
+                               outputDir=None, 
+                               tableName=None,
+                               datasourceDict=None):
+    '''harmonize UNFCCC dataset
+
+    haramonize UNFCCC to conform to open climate schema
+
+    input
+    ------
+    fl: file path to raw data
+    outputDir: directory where table will be created
+    tableName: name of the table to create
+    datasourceDict: dictionary with datasource info
+
+    output
+    -------
+    df: final dataframe with emissions info
+    '''
+    # TODO: pull out all the nested functions and refactor the code
+    
+    # output directory
+    out_dir = Path(outputDir).as_posix()
+    
+    # create out_dir if does not exist
+    make_dir(path=out_dir)
+    
+    # read iso
+    df_iso = read_iso_codes()
+    
+    # path to raw UNFCCC dataset
+    if fl is None:
+        fl = ('/Users/luke/Documents/work/data/UNFCCC/raw/'
+              'Time Series - GHG total without LULUCF, in kt CO₂ equivalent.xlsx')
+    # ensure input types are correct
+    assert isinstance(fl, str), f"fl must be a string"
+    assert isinstance(outputDir, str), f"outputDir must a be string"
+    assert isinstance(tableName, str), f"tableName must be a string"
+    assert isinstance(datasourceDict, dict), f"datasourceDict must be a dictionary"
+    
+    # read excel file into pandas
+    df = pd.read_excel(fl, skiprows=2, na_values=True)
+    df_tmp = df.copy()
+    first_row_with_all_NaN = df[df.isnull().all(axis=1) == True].index.tolist()[0]
+    df = df.loc[0:first_row_with_all_NaN-1]
+
+    # alternative names for countries in UNFCCC
+    alt_names = {
+        'United States of America (the)': ['United States of America'],
+        'Russian Federation (the)': ['Russian Federation'],
+        'United Kingdom of Great Britain and Northern Ireland (the)': ['United Kingdom of Great Britain and Northern Ireland'],
+        'Netherlands (the)': ['Netherlands'],
+        }
+
+    # replace alt_names with names in ISO-3166
+    for correctName in alt_names.keys():
+        filt = df['Party'].isin(alt_names[correctName])
+        df.loc[filt, 'Party'] = correctName
+
+    # merge datasets (wide, each year is a column)
+    df_wide = pd.merge(df, df_iso, 
+                       left_on=["Party"], 
+                       right_on=['country'], 
+                       how="left")
+
+    # filter out null values in English short name
+    filt = df_wide['country'].notnull()
+    df_wide = df_wide.loc[filt]
+
+
+    # convert from wide to long dataframe (was def_merged_long)
+    df_long = df_wide_to_long(df=df_wide,
+                              value_name="emissions",
+                              var_name="year")
+    
+    # rename columns 
+    df = df_long.rename(columns={'iso3': 'identifier',
+           'iso2': 'actor_id'})
+
+    # convert year to int
+    df['year'] = df['year'].astype('int16')
+
+    # create id columns
+    df['datasource_id'] = datasourceDict['datasource_id']
+    df['emissions_id'] = df.apply(lambda row: 
+                                  f"UNFCCC-annex1-GHG:{row['actor_id']}:{row['year']}", 
+                                  axis=1)
+
+    # CO₂ total without LULUCF, in kt
+    def kilotonne_to_metric_ton(val):
+        ''' 1 Kilotonne = 1000 tonnes  '''
+        return val * 1000
+
+    df['total_emissions'] = df['emissions'].apply(kilotonne_to_metric_ton)
+
+    # Create EmissionsAgg table
+    emissionsAggColumns = ["emissions_id", 
+                          "actor_id", 
+                          "year", 
+                          "total_emissions",
+                          "datasource_id"]
+
+    df_emissionsAgg = df[emissionsAggColumns]
+
+    # ensure data has correct types
+    df_emissionsAgg = df_emissionsAgg.astype({'emissions_id': str,
+                                             'actor_id': str,
+                                             'year': int,
+                                             'total_emissions': int,
+                                             'datasource_id': str})
+
+    # sort by actor_id and year
+    df_emissionsAgg = df_emissionsAgg.sort_values(by=['actor_id', 'year'])
+
+    # convert to csv
+    df_emissionsAgg.to_csv(f'{out_dir}/{tableName}.csv', index=False)
+    
+    return df_emissionsAgg 
