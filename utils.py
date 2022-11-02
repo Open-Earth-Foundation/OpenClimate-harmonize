@@ -1561,3 +1561,95 @@ def match_locode_to_climactor():
 
     # save matches
     df_out.to_csv('./key_dict_LOCODE_to_climactor.csv', index=False)
+    
+    
+
+    
+def harmonize_epa_state_ghg(dataDir=None,                               
+                                 outputDir=None,
+                                 tableName=None,
+                                 datasourceDict=None):
+
+    # output directory
+    out_dir = Path(outputDir).as_posix()
+    
+    # create out_dir if does not exist
+    make_dir(path=out_dir)
+        
+    # get list of files
+    if dataDir is None:
+        dataDir = '/Users/luke/Documents/work/data/EPA_state_GHG'
+       
+    assert isinstance(dataDir, str), f"dataDir must be a string"
+    assert isinstance(outputDir, str), f"outputDir must a be string"
+    assert isinstance(tableName, str), f"tableName must be a string"
+    assert isinstance(datasourceDict, dict), f"datasourceDict must be a dictionary"
+    
+    path = Path(dataDir)
+    files = sorted((path.glob('*.csv')))
+
+    df_sub = pd.read_csv('https://raw.githubusercontent.com/Open-Earth-Foundation/OpenClimate-ISO-3166/main/ISO-3166-2/Actor.csv')
+    df_sub = df_sub[['actor_id','is_part_of','name']]
+    filt = (df_sub['is_part_of'] == 'US')
+    df_sub = df_sub.loc[filt]
+    df_sub['name'] = df_sub['name'].str.title()
+
+    def read_each_file(fl):
+        df = pd.read_csv(fl)
+        firstColumnName = df.columns[0]
+        filt = df[f"{firstColumnName}"] == 'Total'
+        df = df.loc[filt]
+        result = re.search(r"(.*)\sEmissions.*", firstColumnName)
+        state = ''.join(result.groups()) 
+        df = df.rename(columns={f"{firstColumnName}": "state"})
+        df["state"] = f"{state}"
+        df_long = df_wide_to_long(df=df,
+                                  value_name='total_emissions',
+                                  var_name="year")
+        return df_long
+
+
+    # concatenate the files
+    df_concat = pd.concat([read_each_file(fl=fl) for fl in files], ignore_index=True)
+    
+    # convert to metric tonnes
+    df_concat['total_emissions'] = df_concat.apply(lambda row: 
+                                             row['total_emissions'] * 10**6, 
+                                             axis=1)
+    
+    # merge on subnationals to get actor_id
+    df_out = pd.merge(df_concat, df_sub, 
+                               left_on=["state"], 
+                               right_on=["name"], 
+                               how="left")
+    
+    # create datasource and emissions id
+    df_out['datasource_id'] = datasourceDict['datasource_id']
+    df_out['emissions_id'] = df_out.apply(lambda row: 
+                                          f"EPA_state_GHG_inventory:{row['actor_id']}:{row['year']}", 
+                                          axis=1)
+    
+    
+    # Create EmissionsAgg table
+    emissionsAggColumns = ["emissions_id", 
+                          "actor_id", 
+                          "year", 
+                          "total_emissions",
+                          "datasource_id"]
+
+    df_emissionsAgg = df_out[emissionsAggColumns]
+
+    # ensure data has correct types
+    df_emissionsAgg = df_emissionsAgg.astype({'emissions_id': str,
+                                             'actor_id': str,
+                                             'year': int,
+                                             'total_emissions': int,
+                                             'datasource_id': str})
+
+    # sort by actor_id and year
+    df_emissionsAgg = df_emissionsAgg.sort_values(by=['actor_id', 'year'])
+
+    # convert to csv
+    df_emissionsAgg.to_csv(f'{out_dir}/{tableName}.csv', index=False)
+    
+    return df_emissionsAgg
