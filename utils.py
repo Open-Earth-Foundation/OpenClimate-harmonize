@@ -6,7 +6,8 @@ from pathlib import Path
 import pathlib
 import re
 import xlrd
-
+import glob
+import os
 
 def make_dir(path=None):
     """Create a new directory at this given path. 
@@ -279,6 +280,8 @@ def unlocode_name_dict():
       "Remarks"
     ]
 
+    # TODO change this to use pathlib.Path
+    
     INPUT_DIR = '/Users/luke/Documents/work/projects/OpenClimate-UNLOCODE/loc221csv'
     all_files = glob.glob(os.path.join(INPUT_DIR, "*CodeListPart*.csv"))
 
@@ -1307,3 +1310,346 @@ def harmonize_eccc_ghg_inventory(dataDir=None,
     df_emissionsAgg.to_csv(f'{out_dir}/{tableName}.csv', index=False)
 
     return df_emissionsAgg 
+
+
+
+def harmonize_eucom_emissions(fl=None,
+                                    outputDir=None, 
+                                    tableName=None,
+                                    dataSourceDictList=None):
+    # set default path
+    if fl is None:
+        fl = '/Users/luke/Documents/work/data/EUCoM/raw/EUCovenantofMayors2022_clean_NCI_7Jun22.csv'
+
+    # ensure input types are correct
+    assert isinstance(fl, str), f"fl must be a string"
+    assert isinstance(outputDir, str), f"outputDir must a be string"
+    assert isinstance(tableName, str), f"tableName must be a string"
+    assert isinstance(dataSourceDictList, list), f"dataSourceDictList must be a list"
+
+    # output directory
+    out_dir = Path(outputDir).as_posix()
+    
+    # create out_dir if does not exist
+    make_dir(path=out_dir)
+    
+    # read EUCoM
+    df = pd.read_csv(fl)
+
+    # drop Kosovo for now
+    # only partially recognized and not recognized by UN
+    # cities in Kosovo are not reporting emissions anyway
+    filt = df['country'] != 'Kosovo'
+    df = df.loc[filt]
+
+    # dictionary with {NameWoDiacritics: nameWithDiactrics}
+    locodeDict = unlocode_name_dict()
+
+    #name.astype(str).map(name_dict)
+    df['name_with_diacritic'] = [locodeDict[name] if locodeDict.get(name) else name for name in df['name']]
+
+    # filter where total emissions NaN
+    filt = ~df['total_co2_emissions'].isna()
+    df = df.loc[filt]
+
+    # only keep select columns
+    columns = [
+     'name',
+     'name_with_diacritic',
+     'country',
+     'iso',
+     'entity_type',
+     'GCoM_ID',
+     'url',
+     'lat',
+     'lng',
+     'region',
+     'data_source',
+     'total_co2_emissions_year',
+     'total_co2_emissions'
+    ]
+    df = df[columns]
+
+    # drop duplicates
+    df_out = df.drop_duplicates(
+        subset = ['name', 'country',  'total_co2_emissions_year', 'total_co2_emissions'],
+        keep = 'first').reset_index(drop = True)
+
+    # TODO: this can be streamlined using out ISO database
+    # create dataframe with iso codes and country names
+    df_iso_harm = name_harmonize_iso()
+    df_iso_tmp = read_iso_codes()
+
+    df_iso = pd.merge(df_iso_harm, df_iso_tmp, 
+                       left_on=["actor_id"], 
+                       right_on=["iso2"], 
+                       how="left")
+
+    # drop actor_id EARTH
+    filt = df_iso['actor_id'] != 'EARTH'
+    df_iso = df_iso.loc[filt]
+    df_iso = df_iso[['name', 'iso2','iso3']]
+
+    # test that all ISO codes match
+    assert sum(df_iso['iso2'].isna())==0, (
+        f"{sum(df_iso['iso2'].isna())} ISO codes did not match"
+    )
+
+    # merge EUCoM with ISO codes, so we get ISO2 and ISO3 codes 
+    df_with_iso = pd.merge(df_out, df_iso, left_on=["iso"], right_on=["iso3"], how="left")
+
+    assert sum(df_with_iso.iso3.isna()) == 0, (
+        f"{sum(df_with_iso.iso3.isna())} ISO codes did not match in EUCoM"
+    )
+
+    # read UNLOCODE, name includes diacritics
+    fl = 'https://raw.githubusercontent.com/Open-Earth-Foundation/OpenClimate-UNLOCODE/main/UNLOCODE/Actor.csv'
+    df_unl = pd.read_csv(fl)
+
+    # split UNLOCODE to get ISO2 code
+    df_unl['iso2'] = [val.split(' ')[0] for val in df_unl['actor_id']]
+
+    # convert to uppercase
+    df_unl['name_title_case'] = df_unl['name'].str.title()
+
+    # convert to titlecase
+    df_with_iso['name_with_diacritic_title_case'] = df_with_iso['name_with_diacritic'].str.title()
+    df_with_iso['name_without_diacritic_title_case'] = df_with_iso['name_x'].str.title()
+
+    # merge EUCoM with UNLOCODE datasets (try matching with diactrics)
+    df_wide = pd.merge(df_with_iso, df_unl, 
+                       left_on=['name_with_diacritic_title_case', "iso2"], 
+                       right_on=['name_title_case', "iso2"], 
+                       how="left")
+
+    # merge EUCoM with UNLOCODE datasets (try matching without diactrics)
+    df_wide2 = pd.merge(df_with_iso, df_unl, 
+                       left_on=['name_without_diacritic_title_case', "iso2"], 
+                       right_on=['name_title_case', "iso2"], 
+                       how="left")
+
+    # remove nan actors
+    df_wide = df_wide.loc[~df_wide['actor_id'].isna()]
+    df_wide2 = df_wide2.loc[~df_wide2['actor_id'].isna()]
+
+    # concatenate the two datasets into one
+    df_out = pd.concat([df_wide, df_wide2], ignore_index=False)
+
+    # drop duplicates on actor_id
+    df_merged = df_out.drop_duplicates(
+        subset = ['actor_id'],
+        keep = 'first').reset_index(drop = True)
+
+    # rename some columns
+    df = df_merged.rename(columns={
+        'total_co2_emissions_year':'year', 
+        'total_co2_emissions':'total_emissions'
+    })
+
+
+    # long to short data_source_name
+    shortDatasourceNameDict = {
+        'EUCovenantofMayors2022': 'EUCoM', 
+        'GCoMEuropeanCommission2021': 'GCoMEC', 
+        'GCoMHarmonized2021': 'GCoMH'
+    }
+
+    # condition one column on another (https://datagy.io/pandas-conditional-column/)
+    df['data_source_short'] = df['data_source'].map(shortDatasourceNameDict)
+
+
+
+    # TODO: add check to make sure values match dict
+    # datasource id dictionary
+    datasource_id_dict = {
+        'EUCovenantofMayors2022': 'EUCoM:2022', 
+        'GCoMEuropeanCommission2021': 'GCoMEC:v2', 
+        'GCoMHarmonized2021': 'GCoMH:2021'
+    }
+
+
+    assert all(x in [dataSourceDict['datasource_id'] for dataSourceDict in dataSourceDictList]  
+               for x in list(datasource_id_dict.values())), (
+        f"Some keys in datasource_id_dict do not match dataSourceDictList"
+    )
+
+    df['datasource_id'] = df['data_source'].map(datasource_id_dict)
+
+
+    # create emissions_id columns
+    df['emissions_id'] = df.apply(lambda row: 
+                                  f"{row['data_source_short']}:{row['actor_id']}:{row['year']}",
+                                  axis=1)
+
+
+    # Create EmissionsAgg table
+    emissionsAggColumns = [
+        "emissions_id", 
+        "actor_id",
+        "year",
+        "total_emissions",
+        "datasource_id"
+    ]
+
+    df_emissionsAgg = df[emissionsAggColumns]
+
+    # ensure type
+    df_emissionsAgg = df_emissionsAgg.astype({
+        'emissions_id': str,
+        'actor_id': str,
+        'year': int,
+        'total_emissions': int,
+        'datasource_id': str
+    })
+
+    # sort by actor_id and year
+    df_emissionsAgg = df_emissionsAgg.sort_values(by=['actor_id', 'year'])
+
+    # convert to csv
+    df_emissionsAgg.to_csv(f'{out_dir}/{tableName}.csv', index=False)
+
+    return df
+
+
+
+def match_locode_to_climactor():
+    import rdata
+    import pandas as pd
+    from utils import name_harmonize_iso
+    from utils import read_iso_codes
+
+    # read ClimActor key dictionary
+    parsed = rdata.parser.parse_file('/Users/luke/Documents/work/projects/ClimActor/data/key_dict.rda')
+    converted = rdata.conversion.convert(parsed)
+    df = converted['key_dict']
+
+    # read UNLOCODE
+    df_unl = pd.read_csv('https://raw.githubusercontent.com/Open-Earth-Foundation/OpenClimate-UNLOCODE/main/UNLOCODE/Actor.csv')
+    df_unl['iso2'] = [val.split(' ')[0] for val in df_unl['actor_id']]
+
+    # read ISO data
+    df_iso_harm = name_harmonize_iso()
+    df_iso_tmp = read_iso_codes()
+    df_iso = pd.merge(df_iso_harm, df_iso_tmp, 
+                       left_on=["actor_id"], 
+                       right_on=["iso2"], 
+                       how="left")
+
+    # only keep city name and iso values
+    df_iso = df_iso.dropna()
+    df_iso = df_iso[['name', 'iso2','iso3']]
+
+    # merge ISO values into UNLOCODE dataset
+    df_merged = pd.merge(df_unl, df_iso, 
+                         left_on=['iso2'], 
+                         right_on=['iso2'], 
+                         how='left')
+    df_merged = (df_merged[['actor_id', 'name_x', 'iso2', 'iso3']]
+                 .rename(columns={'actor_id': 'locode', 'name_x': 'locode_city_name'})
+                )
+
+    # merge UNLOCODE onto ClimActor key dictionary
+    # match the "wrong" and "iso" in ClimActor with "city_name" and "iso3" in UNLOCODE
+    df_out = pd.merge(df, df_merged, 
+                      left_on=['iso', 'wrong'], 
+                      right_on=['iso3', 'locode_city_name'], 
+                      how='left')
+
+    # filter nans
+    filt = ~(df_out['locode'].isna())
+    df_out = df_out.loc[filt]
+
+    # save matches
+    df_out.to_csv('./key_dict_LOCODE_to_climactor.csv', index=False)
+    
+    
+
+    
+def harmonize_epa_state_ghg(dataDir=None,                               
+                                 outputDir=None,
+                                 tableName=None,
+                                 datasourceDict=None):
+
+    # output directory
+    out_dir = Path(outputDir).as_posix()
+    
+    # create out_dir if does not exist
+    make_dir(path=out_dir)
+        
+    # get list of files
+    if dataDir is None:
+        dataDir = '/Users/luke/Documents/work/data/EPA_state_GHG'
+       
+    assert isinstance(dataDir, str), f"dataDir must be a string"
+    assert isinstance(outputDir, str), f"outputDir must a be string"
+    assert isinstance(tableName, str), f"tableName must be a string"
+    assert isinstance(datasourceDict, dict), f"datasourceDict must be a dictionary"
+    
+    path = Path(dataDir)
+    files = sorted((path.glob('*.csv')))
+
+    df_sub = pd.read_csv('https://raw.githubusercontent.com/Open-Earth-Foundation/OpenClimate-ISO-3166/main/ISO-3166-2/Actor.csv')
+    df_sub = df_sub[['actor_id','is_part_of','name']]
+    filt = (df_sub['is_part_of'] == 'US')
+    df_sub = df_sub.loc[filt]
+    df_sub['name'] = df_sub['name'].str.title()
+
+    def read_each_file(fl):
+        df = pd.read_csv(fl)
+        firstColumnName = df.columns[0]
+        filt = df[f"{firstColumnName}"] == 'Total'
+        df = df.loc[filt]
+        result = re.search(r"(.*)\sEmissions.*", firstColumnName)
+        state = ''.join(result.groups()) 
+        df = df.rename(columns={f"{firstColumnName}": "state"})
+        df["state"] = f"{state}"
+        df_long = df_wide_to_long(df=df,
+                                  value_name='total_emissions',
+                                  var_name="year")
+        return df_long
+
+
+    # concatenate the files
+    df_concat = pd.concat([read_each_file(fl=fl) for fl in files], ignore_index=True)
+    
+    # convert to metric tonnes
+    df_concat['total_emissions'] = df_concat.apply(lambda row: 
+                                             row['total_emissions'] * 10**6, 
+                                             axis=1)
+    
+    # merge on subnationals to get actor_id
+    df_out = pd.merge(df_concat, df_sub, 
+                               left_on=["state"], 
+                               right_on=["name"], 
+                               how="left")
+    
+    # create datasource and emissions id
+    df_out['datasource_id'] = datasourceDict['datasource_id']
+    df_out['emissions_id'] = df_out.apply(lambda row: 
+                                          f"EPA_state_GHG_inventory:{row['actor_id']}:{row['year']}", 
+                                          axis=1)
+    
+    
+    # Create EmissionsAgg table
+    emissionsAggColumns = ["emissions_id", 
+                          "actor_id", 
+                          "year", 
+                          "total_emissions",
+                          "datasource_id"]
+
+    df_emissionsAgg = df_out[emissionsAggColumns]
+
+    # ensure data has correct types
+    df_emissionsAgg = df_emissionsAgg.astype({'emissions_id': str,
+                                             'actor_id': str,
+                                             'year': int,
+                                             'total_emissions': int,
+                                             'datasource_id': str})
+
+    # sort by actor_id and year
+    df_emissionsAgg = df_emissionsAgg.sort_values(by=['actor_id', 'year'])
+
+    # convert to csv
+    df_emissionsAgg.to_csv(f'{out_dir}/{tableName}.csv', index=False)
+    
+    return df_emissionsAgg
