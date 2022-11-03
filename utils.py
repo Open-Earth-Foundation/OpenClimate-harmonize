@@ -1678,3 +1678,245 @@ def harmonize_epa_state_ghg(dataDir=None,
     df_emissionsAgg.to_csv(f'{out_dir}/{tableName}.csv', index=False)
     
     return df_emissionsAgg
+
+
+def harmonize_eucom_pledges(fl=None,
+                            outputDir=None, 
+                            tableName=None,
+                            dataSourceDictList=None):
+    # set default path
+    if fl is None:
+        fl = '/Users/luke/Documents/work/data/EUCoM/raw/EUCovenantofMayors2022_clean_NCI_7Jun22.csv'
+
+    # ensure input types are correct
+    assert isinstance(fl, str), f"fl must be a string"
+    assert isinstance(outputDir, str), f"outputDir must a be string"
+    assert isinstance(tableName, str), f"tableName must be a string"
+    assert isinstance(dataSourceDictList, list), f"dataSourceDictList must be a list"
+
+    # output directory
+    out_dir = Path(outputDir).as_posix()
+    
+    # create out_dir if does not exist
+    make_dir(path=out_dir)
+    
+    # read EUCoM
+    df = pd.read_csv(fl)
+
+    # drop Kosovo for now
+    # only partially recognized and not recognized by UN
+    # cities in Kosovo are not reporting emissions anyway
+    filt = df['country'] != 'Kosovo'
+    df = df.loc[filt]
+
+    # dictionary with {NameWoDiacritics: nameWithDiactrics}
+    locodeDict = unlocode_name_dict()
+
+    #name.astype(str).map(name_dict)
+    df['name_with_diacritic'] = [locodeDict[name] if locodeDict.get(name) else name for name in df['name']]
+
+    # filter where total emissions NaN
+    filt = ~df['total_co2_emissions'].isna()
+    df = df.loc[filt]
+
+
+    # only keep select columns
+    columns = [
+        'name',
+        'country',
+        'name_with_diacritic',
+        'ghg_reduction_target_type',
+        'baseline_year',
+        'target_year',
+        'percent_reduction',
+        'url',
+        'action_description',
+        'data_source',
+        'country',
+        'iso',
+        'entity_type',
+        'GCoM_ID',
+        'ghgs_included', 
+    ]
+    df = df[columns]
+
+
+    filt = ~(df['percent_reduction'].isna())
+    df = df.loc[filt] # 2569/6187 , 41%
+
+    filt = ~(df['target_year'].isna())
+    df = df.loc[filt]  # 2518/6187 , 40%
+
+    ##df.isna().sum()
+
+    # drop duplicates
+    df_out = df.drop_duplicates(
+        subset = ['name', 'country',  'iso', 'baseline_year', 'target_year', 'percent_reduction'],
+        keep = 'last').reset_index(drop = True)
+
+
+    # TODO: this can be streamlined using out ISO database
+    # create dataframe with iso codes and country names
+    df_iso_harm = name_harmonize_iso()
+    df_iso_tmp = read_iso_codes()
+
+    df_iso = pd.merge(df_iso_harm, df_iso_tmp, 
+                       left_on=["actor_id"], 
+                       right_on=["iso2"], 
+                       how="left")
+
+    # drop actor_id EARTH
+    filt = df_iso['actor_id'] != 'EARTH'
+    df_iso = df_iso.loc[filt]
+    df_iso = df_iso[['name', 'iso2','iso3']]
+
+    # test that all ISO codes match
+    assert sum(df_iso['iso2'].isna())==0, (
+        f"{sum(df_iso['iso2'].isna())} ISO codes did not match"
+    )
+
+
+    # merge EUCoM with ISO codes, so we get ISO2 and ISO3 codes 
+    df_with_iso = pd.merge(df_out, df_iso, left_on=["iso"], right_on=["iso3"], how="left")
+
+
+    assert sum(df_with_iso.iso3.isna()) == 0, (
+        f"{sum(df_with_iso.iso3.isna())} ISO codes did not match in EUCoM"
+    )
+
+    # read UNLOCODE, name includes diacritics
+    fl = 'https://raw.githubusercontent.com/Open-Earth-Foundation/OpenClimate-UNLOCODE/main/UNLOCODE/Actor.csv'
+    df_unl = pd.read_csv(fl, keep_default_na=False)
+
+    # split UNLOCODE to get ISO2 code
+    df_unl['iso2'] = [val.split(' ')[0] for val in df_unl['actor_id']]
+
+    # convert to uppercase
+    df_unl['name_title_case'] = df_unl['name'].str.title()
+
+    # convert to titlecase
+    df_with_iso['name_with_diacritic_title_case'] = df_with_iso['name_with_diacritic'].str.title()
+    df_with_iso['name_without_diacritic_title_case'] = df_with_iso['name_x'].str.title()
+
+    # merge EUCoM with UNLOCODE datasets (try matching with diactrics)
+    df_wide = pd.merge(df_with_iso, df_unl, 
+                       left_on=['name_with_diacritic_title_case', "iso2"], 
+                       right_on=['name_title_case', "iso2"], 
+                       how="left")
+
+    # merge EUCoM with UNLOCODE datasets (try matching without diactrics)
+    df_wide2 = pd.merge(df_with_iso, df_unl, 
+                       left_on=['name_without_diacritic_title_case', "iso2"], 
+                       right_on=['name_title_case', "iso2"], 
+                       how="left")
+
+    # remove nan actors
+    df_wide = df_wide.loc[~df_wide['actor_id'].isna()]
+    df_wide2 = df_wide2.loc[~df_wide2['actor_id'].isna()]
+
+    # concatenate the two datasets into one
+    df_out = pd.concat([df_wide, df_wide2], ignore_index=False)
+
+    # drop duplicates on actor_id
+    df_merged = df_out.drop_duplicates(
+        subset = ['actor_id'],
+        keep = 'first').reset_index(drop = True)
+
+
+    # target_id  actor_id target_type baseline_year target_year target_value target_unit URL
+
+    # rename some columns
+    df = df_merged.rename(columns={
+        'ghg_reduction_target_type':'target_type', 
+        'percent_reduction':'target_value',
+        'url': 'URL'
+    })
+
+
+    # long to short data_source_name
+    shortDatasourceNameDict = {
+        'EUCovenantofMayors2022': 'EUCoM', 
+        'GCoMEuropeanCommission2021': 'GCoMEC', 
+        'GCoMHarmonized2021': 'GCoMH'
+    }
+
+    # condition one column on another (https://datagy.io/pandas-conditional-column/)
+    df['data_source_short'] = df['data_source'].map(shortDatasourceNameDict)
+
+
+
+    # TODO: add check to make sure values match dict
+    # datasource id dictionary
+    datasource_id_dict = {
+        'EUCovenantofMayors2022': 'EUCoM:2022', 
+        'GCoMEuropeanCommission2021': 'GCoMEC:v2', 
+        'GCoMHarmonized2021': 'GCoMH:2021'
+    }
+
+
+    assert all(x in [dataSourceDict['datasource_id'] for dataSourceDict in dataSourceDictList]  
+               for x in list(datasource_id_dict.values())), (
+        f"Some keys in datasource_id_dict do not match dataSourceDictList"
+    )
+
+    df['datasource_id'] = df['data_source'].map(datasource_id_dict)
+
+
+    # create emissions_id columns
+    df['target_id'] = df.apply(lambda row: 
+                                  f"{row['data_source_short']}:EUCoM_pledge:{row['actor_id']}",
+                                  axis=1)
+
+
+    df['target_unit'] = 'percent'
+
+    # Create EmissionsAgg table
+    targetColumns = [
+        "target_id", 
+        "actor_id",
+        "target_type",
+        "baseline_year",
+        "target_year",
+        "target_value",
+        'target_unit',
+        "URL",
+        "datasource_id"
+    ]
+
+    df_target = df[targetColumns]
+
+    # drop nans in target_type
+    # have to do this before change type to str
+    filt = ~(df_target["target_type"].isna())
+    df_target = df_target.loc[filt]
+        
+    # ensure type
+    df_target = df_target.astype({
+        "target_id": str,
+        "actor_id": str,
+        "target_type": str,
+        "baseline_year": int,
+        "target_year": int,
+        "target_value": int,
+        'target_unit': str,
+        "URL": str,
+        "datasource_id": str
+    })
+
+    # fill missing URL with 
+    filt = df_target['URL'] == 'nan'
+    df_target.loc[filt, 'URL'] = ''
+
+    # filter out Intensity targets, need clarity on these
+    # URL looks like they are Absolute emission reduction
+    # ZHI YI: these records mostly came from JRC, no mention of being "per capita"
+    filt = df_target["target_type"] != 'Intensity target'
+    df_target = df_target.loc[filt]
+        
+    # sort by actor_id and year
+    df_target = df_target.sort_values(by=['actor_id', 'baseline_year'])
+
+    # convert to csv
+    df_target.to_csv(f'{out_dir}/{tableName}.csv', index=False)
+
+    return df
