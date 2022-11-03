@@ -1514,17 +1514,16 @@ def harmonize_eucom_emissions(fl=None,
 
 def match_locode_to_climactor():
     import rdata
-    import pandas as pd
-    from utils import name_harmonize_iso
-    from utils import read_iso_codes
 
-    # read ClimActor key dictionary
+    # entity_type ClimActor key dictionary
     parsed = rdata.parser.parse_file('/Users/luke/Documents/work/projects/ClimActor/data/key_dict.rda')
     converted = rdata.conversion.convert(parsed)
     df = converted['key_dict']
+    df = df.loc[df.entity_type.isin(['City'])]
 
     # read UNLOCODE
-    df_unl = pd.read_csv('https://raw.githubusercontent.com/Open-Earth-Foundation/OpenClimate-UNLOCODE/main/UNLOCODE/Actor.csv')
+    fl = 'https://raw.githubusercontent.com/Open-Earth-Foundation/OpenClimate-UNLOCODE/main/UNLOCODE/Actor.csv'
+    df_unl = pd.read_csv(fl,keep_default_na=False)
     df_unl['iso2'] = [val.split(' ')[0] for val in df_unl['actor_id']]
 
     # read ISO data
@@ -1539,28 +1538,54 @@ def match_locode_to_climactor():
     df_iso = df_iso.dropna()
     df_iso = df_iso[['name', 'iso2','iso3']]
 
+    # add state column to locode
+    df_unl['state'] = df_unl['is_part_of'].str.rsplit("-", n=1, expand=True)[1]
+
     # merge ISO values into UNLOCODE dataset
     df_merged = pd.merge(df_unl, df_iso, 
                          left_on=['iso2'], 
                          right_on=['iso2'], 
                          how='left')
-    df_merged = (df_merged[['actor_id', 'name_x', 'iso2', 'iso3']]
-                 .rename(columns={'actor_id': 'locode', 'name_x': 'locode_city_name'})
-                )
+    df_merged = (
+        df_merged[['actor_id', 'name_x', 'iso2', 'iso3', 'state']]
+        .rename(columns={'actor_id': 'locode', 'name_x': 'locode_city_name'})
+    )
+
+    df_copy = df.copy()
+    df_copy['state'] = df_copy['right'].str.rsplit(",", n=1, expand=True)[1]
+    df = df_copy
 
     # merge UNLOCODE onto ClimActor key dictionary
     # match the "wrong" and "iso" in ClimActor with "city_name" and "iso3" in UNLOCODE
     df_out = pd.merge(df, df_merged, 
+                      left_on=['iso', 'wrong', 'state'], 
+                      right_on=['iso3', 'locode_city_name', 'state'], 
+                      how='left')
+
+    # filter nans
+    filt = ~(df_out['locode'].isna())
+    df_matched_with_state = df_out.loc[filt]
+
+    # merge UNLOCODE onto ClimActor key dictionary
+    # match the "wrong" and "iso" in ClimActor with "city_name" and "iso3" in UNLOCODE
+    df_out = pd.merge(df.reset_index().loc[~filt], df_merged, 
                       left_on=['iso', 'wrong'], 
                       right_on=['iso3', 'locode_city_name'], 
                       how='left')
 
     # filter nans
     filt = ~(df_out['locode'].isna())
-    df_out = df_out.loc[filt]
+    df_matched_without_state = df_out.loc[filt]
+
+    fil = (df_matched_without_state['state_x'].isnull()) 
+    df_matched_without_state = df_matched_without_state.loc[fil]
+
+    df_output = pd.concat([df_matched_without_state, df_matched_with_state])
 
     # save matches
-    df_out.to_csv('./key_dict_LOCODE_to_climactor.csv', index=False)
+    df_output.to_csv('./key_dict_LOCODE_matchs.csv', index=False)
+    
+    return df_output
     
     
 
