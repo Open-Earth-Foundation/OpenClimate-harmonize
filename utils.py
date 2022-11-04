@@ -1922,117 +1922,73 @@ def harmonize_eucom_pledges(fl=None,
     return df
 
 
-def harmonize_us_climate_alliance_pledge():
+def harmonize_us_climate_alliance_pledge(outputDir=None, 
+                                    tableName=None,
+                                    dataSourceDict=None):
+    # ensure input types are correct
+    assert isinstance(outputDir, str), f"outputDir must a be string"
+    assert isinstance(tableName, str), f"tableName must be a string"
+    assert isinstance(dataSourceDict, dict), f"dataSourceDict must be a dict"
+    
     # output directory
-    outputDir = './data_targets/subnational/US_climate_alliance/'
     out_dir = Path(outputDir).as_posix()
-
+    
     # create out_dir if does not exist
     make_dir(path=out_dir)
-
-    # Publisher table
-    publisherDict = {
-        'id': 'US_climate_alliance',
-        'name': 'United States Climate Alliance',
-        'URL': 'http://www.usclimatealliance.org/' 
-    }
-
-    write_to_csv(outputDir=outputDir, 
-                 tableName='Publisher', 
-                 dataDict=publisherDict, 
-                 mode='w')
-
-    # DataSource table
-    datasourceDict = {
-        'datasource_id': 'US_climate_alliance:2022',
-        'name': 'US Climate Alliance ',
-        'publisher': 'US_climate_alliance',
-        'published': '2022-11-03',
-        'URL': 'http://www.usclimatealliance.org/state-climate-energy-policies'
-    }
-
-    write_to_csv(outputDir=outputDir, 
-                 tableName='DataSource', 
-                 dataDict=datasourceDict, 
-                 mode='w')
-
-    # raw data for climate alliance
-    stateCommitmentURLs = [
-        ['California' ,'https://ww2.arb.ca.gov/sites/default/files/2022-05/2022-draft-sp.pdf'],
-        ['Colorado', 'https://energyoffice.colorado.gov/climate-energy/ghg-pollution-reduction-roadmap'],
-        ['Connecticut', 'https://portal.ct.gov/-/media/DEEP/climatechange/GC3/GC3_Phase1_Report_Jan2021.pdf'],
-        ['Delaware', 'https://documents.dnrec.delaware.gov/energy/Documents/Climate/Plan/Delaware-Climate-Action-Plan-2021.pdf'],
-        ['Hawaii', 'https://hawaii2050.hawaii.gov/wp-content/uploads/2021/07/FINAL-Hawaii-2050-Sustainability-Plan-web-1.pdf'],
-        ['Illinois', 'https://www.ilga.gov/legislation/102/SB/10200SB2408lv.htm'],
-        ['Louisiana', 'https://gov.louisiana.gov/assets/docs/CCI-Task-force/CAP/Climate_Action_Plan_FINAL_3.pdf'],
-        ['Maine', 'https://www.maine.gov/climateplan/sites/maine.gov.climateplan/files/inline-files/MaineWontWait_December2020_printable_12.1.20.pdf'],
-        ['Maryland', 'https://www.gfrlaw.com/what-we-do/insights/climate-solutions-now-act-2022'],
-        ['Massachusetts', 'https://www.mass.gov/doc/clean-energy-and-climate-plan-for-2025-and-2030/download'],
-        ['Michigan', 'https://www.michigan.gov/egle/-/media/Project/Websites/egle/Documents/Offices/OCE/MI-Healthy-Climate-Plan.pdf?rev=d13f4adc2b1d45909bd708cafccbfffa'],
-        ['Minnesota', 'https://climate.state.mn.us/sites/climate-action/files/Climate%20Action%20Framework.pdf'],
-        ['Nevada', 'https://climateaction.nv.gov/wp-content/uploads/2021/01/NVClimateStrategy_011921.pdf'],
-        ['New Jersey', 'https://nj.gov/infobank/eo/056murphy/pdf/EO-274.pdf'],
-        ['New Mexico', 'https://www.climateaction.nm.gov/wp-content/uploads/2022/05/NMClimateChange_2021_final.pdf'],
-        ['New York', 'https://climate.ny.gov/-/media/Project/Climate/Files/Draft-Scoping-Plan.pdf'],
-        ['North Carolina', 'https://governor.nc.gov/media/2907/open'],
-        ['Oregon', 'https://oeconline.org/oregon-climate-action-plan/'],
-        ['Pennsylvania', 'http://www.depgreenport.state.pa.us/elibrary/GetDocument?docId=3925177&DocName=2021%20PENNSYLVANIA%20CLIMATE%20ACTION%20PLAN.PDF'],
-        ['Puerto Rico', 'https://www.ncsl.org/research/energy/greenhouse-gas-emissions-reduction-targets-and-market-based-policies.aspx#:~:text=Description%3A%20In%202019%2C%20Puerto%20Rico,targets%20of%20100%25%20by%202041.'],
-        ['Rhode Island', 'https://www.c2es.org/wp-content/uploads/2018/11/RI_2016_Action_Plan.pdf'],
-        ['Vermont', 'https://outside.vermont.gov/agency/anr/climatecouncil/Shared%20Documents/Initial%20Climate%20Action%20Plan%20-%20Final%20-%2012-1-21.pdf'],
-        ['Washington', 'https://ecology.wa.gov/Blog/Posts/February-2022/The-Climate-Commitment-Act-Washington-s-Path-to-Ca'],
-        ['Wisconsin', 'https://climatechange.wi.gov/Documents/Final%20Report/GovernorsTaskForceonClimateChangeReport-LowRes.pdf'],
-    ]
-
+        
     climateAllianceData = [
-        ['California', 'US-CA', 'Absolute emissions reduction', '40', 'percent', '1990', '2030', ''] ,
-        ['Colorado', 'US-CO', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', ''], 
-        ['Colorado', 'US-CO', 'Absolute emissions reduction', '50', 'percent', '2005', '2030', ''], 
-        ['Colorado', 'US-CO', 'Absolute emissions reduction', '90', 'percent', '2005', '2050', ''], 
-        ['Connecticut', 'US-CT', 'Absolute emissions reduction', '45', 'percent', '2001', '2030', ''],
-        ['Delaware', 'US-DE', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', '26-28'],
-        ['Hawaii', 'US-HI', 'Absolute emissions reduction', '50', 'percent', '2005', '2030', ''], 
-        ['Illinois', 'US-IL', 'Absolute emissions reduction', '26', 'percent', '2005', '2030', '26-28'],
-        ['Louisiana', 'US-LA', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', '26-28'],
-        ['Louisiana', 'US-LA', 'Absolute emissions reduction', '40', 'percent', '2005', '2030', '40-50'],
-        ['Louisiana', 'US-LA', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', ''],
-        ['Maine', 'US-ME', 'Absolute emissions reduction', '45', 'percent', '1990', '2030', ''],
-        ['Maine', 'US-ME', 'Absolute emissions reduction', '80', 'percent', '1990', '2050', ''],
-        ['Maryland', 'US-MD', 'Absolute emissions reduction', '60', 'percent', '2006', '2031', ''],
-        ['Maryland', 'US-MD', 'Absolute emissions reduction', '100', 'percent', '2006', '2045', ''],
-        ['Massachusetts', 'US-MA', 'Absolute emissions reduction', '33', 'percent', '1990', '2025', ''],
-        ['Massachusetts', 'US-MA', 'Absolute emissions reduction', '50', 'percent', '1990', '2030', ''],
-        ['Michigan', 'US-MI', 'Absolute emissions reduction', '28', 'percent', '2005', '2025', ''],
-        ['Michigan', 'US-MI', 'Absolute emissions reduction', '52', 'percent', '2005', '2030', ''],
-        ['Minnesota', 'US-MN', 'Absolute emissions reduction', '50', 'percent', '2005', '2030', ''],
-        ['Minnesota', 'US-MN', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', ''],
-        ['Nevada', 'US-NV', 'Absolute emissions reduction', '28', 'percent', '2005', '2025', ''],
-        ['Nevada', 'US-NV', 'Absolute emissions reduction', '45', 'percent', '2005', '2030', ''],
-        ['Nevada', 'US-NV', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', ''],
-        ['New Jersey', 'US-NJ', 'Absolute emissions reduction', '50', 'percent', '2006', '2030', ''], 
-        ['New Jersey', 'US-NJ', 'Absolute emissions reduction', '80', 'percent', '2006', '2050', ''],
-        ['New Mexico', 'US-NM', 'Absolute emissions reduction', '45', 'percent', '2005', '2030', ''],
-        ['New Mexico', 'US-NM', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', ''],
-        ['New York', 'US-NY', 'Absolute emissions reduction', '40', 'percent', '1990', '2030', ''],
-        ['New York', 'US-NY', 'Absolute emissions reduction', '85', 'percent', '1990', '2050', ''],
-        ['North Carolina', 'US-NC', 'Absolute emissions reduction', '50', 'percent', '2005', '2030', ''],
-        ['North Carolina', 'US-NC', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', ''],
-        ['Oregon', 'US-OR', 'Absolute emissions reduction', '45', 'percent', '1990', '2035', ''],
-        ['Oregon', 'US-OR', 'Absolute emissions reduction', '80', 'percent', '1990', '2050', ''],
-        ['Pennsylvania', 'US-PA', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', ''],
-        ['Pennsylvania', 'US-PA', 'Absolute emissions reduction', '80', 'percent', '2005', '2050', ''],
-        ['Puerto Rico', 'US-PR', 'Absolute emissions reduction', '50', 'percent', '2019', '2025', ''],
-        ['Rhode Island', 'US-RI', 'Absolute emissions reduction', '10', 'percent', '1990', '2020', ''],
-        ['Rhode Island', 'US-RI', 'Absolute emissions reduction', '45', 'percent', '1990', '2035', ''],
-        ['Rhode Island', 'US-RI', 'Absolute emissions reduction', '80', 'percent', '1990', '2050', ''],
-        ['Vermont', 'US-VT', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', ''],
-        ['Vermont', 'US-VT', 'Absolute emissions reduction', '40', 'percent', '2005', '2030', ''],
-        ['Vermont', 'US-VT', 'Absolute emissions reduction', '80', 'percent', '2005', '2050', ''],
-        ['Washington', 'US-WA', 'Absolute emissions reduction', '0', 'percent', '1990', '2020', ''],
-        ['Washington', 'US-WA', 'Absolute emissions reduction', '45', 'percent', '1990', '2030', ''],
-        ['Washington', 'US-WA', 'Absolute emissions reduction', '70', 'percent', '1990', '2040', ''],
-        ['Washington', 'US-WA', 'Absolute emissions reduction', '95', 'percent', '1990', '2050', ''],
-        ['Wisconsin', 'US-WI', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', '26-28'],
+        ['California', 'US-CA', 'Absolute emissions reduction', '0', 'percent', '1990', '2020', '', 'https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=200520060AB32'],
+        ['California', 'US-CA', 'Absolute emissions reduction', '40', 'percent', '1990', '2030', '', 'https://www.ca.gov/archive/gov39/wp-content/uploads/2018/09/9.10.18-Executive-Order.pdf'],
+        ['California', 'US-CA', 'Absolute emissions reduction', '80', 'percent', '1990', '2050', '', 'https://www.ca.gov/archive/gov39/wp-content/uploads/2018/09/9.10.18-Executive-Order.pdf'], 
+        ['Colorado', 'US-CO', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', '', 'https://leg.colorado.gov/sites/default/files/2019a_1261_signed.pdf'], 
+        ['Colorado', 'US-CO', 'Absolute emissions reduction', '50', 'percent', '2005', '2030', '', 'https://leg.colorado.gov/sites/default/files/2019a_1261_signed.pdf'], 
+        ['Colorado', 'US-CO', 'Absolute emissions reduction', '90', 'percent', '2005', '2050', '', 'https://leg.colorado.gov/sites/default/files/2019a_1261_signed.pdf'], 
+        ['Connecticut', 'US-CT', 'Absolute emissions reduction', '45', 'percent', '2001', '2030', '', 'https://www.cga.ct.gov/2018/act/pa/pdf/2018PA-00082-R00SB-00007-PA.pdf'],
+        ['Connecticut', 'US-CT', 'Absolute emissions reduction', '80', 'percent', '2001', '2050', '', 'https://www.cga.ct.gov/2018/act/pa/pdf/2018PA-00082-R00SB-00007-PA.pdf'],
+        ['Delaware', 'US-DE', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', '26-28', 'https://documents.dnrec.delaware.gov/energy/Documents/Climate/Plan/Delaware-Climate-Action-Plan-2021.pdf'],
+        ['Hawaii', 'US-HI', 'Absolute emissions reduction', '50', 'percent', '2005', '2030', '', 'https://trackbill.com/bill/hawaii-governor-message-1340-act-238/2266076/'], 
+        ['Illinois', 'US-IL', 'Absolute emissions reduction', '26', 'percent', '2005', '2030', '26-28', 'https://www2.illinois.gov/epa/topics/climate/Pages/default.aspx'],
+        ['Louisiana', 'US-LA', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', '26-28', 'https://gov.louisiana.gov/assets/ExecutiveOrders/2020/JBE-2020-18-Climate-Initiatives-Task-Force.pdf'],
+        ['Louisiana', 'US-LA', 'Absolute emissions reduction', '40', 'percent', '2005', '2030', '40-50', 'https://gov.louisiana.gov/assets/ExecutiveOrders/2020/JBE-2020-18-Climate-Initiatives-Task-Force.pdf'],
+        ['Louisiana', 'US-LA', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', '', 'https://gov.louisiana.gov/assets/ExecutiveOrders/2020/JBE-2020-18-Climate-Initiatives-Task-Force.pdf'],
+        ['Maine', 'US-ME', 'Absolute emissions reduction', '45', 'percent', '1990', '2030', '', 'https://www.maine.gov/governor/mills/sites/maine.gov.governor.mills/files/inline-files/Executive%20Order%209-23-2019_0.pdf'],
+        ['Maine', 'US-ME', 'Absolute emissions reduction', '80', 'percent', '1990', '2050', '', 'https://www.maine.gov/governor/mills/sites/maine.gov.governor.mills/files/inline-files/Executive%20Order%209-23-2019_0.pdf'],
+        ['Maryland', 'US-MD', 'Absolute emissions reduction', '60', 'percent', '2006', '2031', '', 'https://www.gfrlaw.com/what-we-do/insights/climate-solutions-now-act-2022'],
+        ['Maryland', 'US-MD', 'Absolute emissions reduction', '100', 'percent', '2006', '2045', '', 'https://www.gfrlaw.com/what-we-do/insights/climate-solutions-now-act-2022'],
+        ['Massachusetts', 'US-MA', 'Absolute emissions reduction', '33', 'percent', '1990', '2025', '', 'https://www.mass.gov/doc/2025-and-2030-ghg-emissions-limit-letter-of-determination/download'],
+        ['Massachusetts', 'US-MA', 'Absolute emissions reduction', '50', 'percent', '1990', '2030', '', 'https://www.mass.gov/doc/2025-and-2030-ghg-emissions-limit-letter-of-determination/download'],
+        ['Michigan', 'US-MI', 'Absolute emissions reduction', '28', 'percent', '2005', '2025', '', 'https://www.michigan.gov/egle/-/media/Project/Websites/egle/Documents/Offices/OCE/MI-Healthy-Climate-Plan.pdf?rev=d13f4adc2b1d45909bd708cafccbfffa'],
+        ['Michigan', 'US-MI', 'Absolute emissions reduction', '52', 'percent', '2005', '2030', '', 'https://www.michigan.gov/egle/-/media/Project/Websites/egle/Documents/Offices/OCE/MI-Healthy-Climate-Plan.pdf?rev=d13f4adc2b1d45909bd708cafccbfffa'],
+        ['Minnesota', 'US-MN', 'Absolute emissions reduction', '30', 'percent', '2005', '2025', '', 'https://www.pca.state.mn.us/air-water-land-climate/climate-change-initiatives#:~:text=The%20Next%20Generation%20Energy%20Act%20requires%20the%20state%20to%20reduce,renewable%20energy%20standards%20in%20Minnesota.'],
+        ['Minnesota', 'US-MN', 'Absolute emissions reduction', '80', 'percent', '2005', '2050', '', 'https://www.pca.state.mn.us/air-water-land-climate/climate-change-initiatives#:~:text=The%20Next%20Generation%20Energy%20Act%20requires%20the%20state%20to%20reduce,renewable%20energy%20standards%20in%20Minnesota.'], 
+        ['Nevada', 'US-NV', 'Absolute emissions reduction', '28', 'percent', '2005', '2025', '', 'https://www.leg.state.nv.us/App/NELIS/REL/80th2019/Bill/6431/Text'],
+        ['Nevada', 'US-NV', 'Absolute emissions reduction', '45', 'percent', '2005', '2030', '', 'https://www.leg.state.nv.us/App/NELIS/REL/80th2019/Bill/6431/Text'],
+        ['Nevada', 'US-NV', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', '', 'https://www.leg.state.nv.us/App/NELIS/REL/80th2019/Bill/6431/Text'],
+        ['New Jersey', 'US-NJ', 'Absolute emissions reduction', '0', 'percent', '1990', '2020', '', 'https://pub.njleg.gov/bills/2018/PL19/197_.htm'],
+        ['New Jersey', 'US-NJ', 'Absolute emissions reduction', '50', 'percent', '2006', '2030', '', 'https://nj.gov/infobank/eo/056murphy/pdf/EO-274.pdf'], 
+        ['New Jersey', 'US-NJ', 'Absolute emissions reduction', '80', 'percent', '2006', '2050', '', 'https://pub.njleg.gov/bills/2018/PL19/197_.htm'],
+        ['New Mexico', 'US-NM', 'Absolute emissions reduction', '45', 'percent', '2005', '2030', '', 'https://www.governor.state.nm.us/wp-content/uploads/2019/01/EO_2019-003.pdf'],
+        ['New York', 'US-NY', 'Absolute emissions reduction', '40', 'percent', '1990', '2030', '', 'https://legislation.nysenate.gov/pdf/bills/2019/S6599'],
+        ['New York', 'US-NY', 'Absolute emissions reduction', '85', 'percent', '1990', '2050', '', 'https://legislation.nysenate.gov/pdf/bills/2019/S6599'],
+        ['North Carolina', 'US-NC', 'Absolute emissions reduction', '50', 'percent', '2005', '2030', '', 'https://governor.nc.gov/media/2907/open'],
+        ['North Carolina', 'US-NC', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', '', 'https://governor.nc.gov/media/2907/open'],
+        ['Oregon', 'US-OR', 'Absolute emissions reduction', '45', 'percent', '1990', '2035', '', 'https://www.oregon.gov/gov/Documents/executive_orders/eo_20-04.pdf'],
+        ['Oregon', 'US-OR', 'Absolute emissions reduction', '80', 'percent', '1990', '2050', '', 'https://www.oregon.gov/gov/Documents/executive_orders/eo_20-04.pdf'],
+        ['Pennsylvania', 'US-PA', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', '', 'https://www.oa.pa.gov/Policies/eo/Documents/2019-01.pdf'],
+        ['Pennsylvania', 'US-PA', 'Absolute emissions reduction', '80', 'percent', '2005', '2050', '', 'https://www.oa.pa.gov/Policies/eo/Documents/2019-01.pdf'],
+        ['Puerto Rico', 'US-PR', 'Absolute emissions reduction', '50', 'percent', '2019', '2025', '', 'https://www.ncsl.org/research/energy/greenhouse-gas-emissions-reduction-targets-and-market-based-policies.aspx#:~:text=Description%3A%20In%202019%2C%20Puerto%20Rico,targets%20of%20100%25%20by%202041.'],
+        ['Rhode Island', 'US-RI', 'Absolute emissions reduction', '10', 'percent', '1990', '2020', '', 'http://webserver.rilin.state.ri.us/Statutes/TITLE42/42-6.2/42-6.2-2.HTM'],
+        ['Rhode Island', 'US-RI', 'Absolute emissions reduction', '45', 'percent', '1990', '2035', '', 'http://webserver.rilin.state.ri.us/Statutes/TITLE42/42-6.2/42-6.2-2.HTM'],
+        ['Rhode Island', 'US-RI', 'Absolute emissions reduction', '80', 'percent', '1990', '2040', '', 'http://webserver.rilin.state.ri.us/Statutes/TITLE42/42-6.2/42-6.2-2.HTM'],
+        ['Rhode Island', 'US-RI', 'Absolute emissions reduction', '100', 'percent', '1990', '2050', '', 'http://webserver.rilin.state.ri.us/Statutes/TITLE42/42-6.2/42-6.2-2.HTM'],
+        ['Vermont', 'US-VT', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', '', 'https://legislature.vermont.gov/Documents/2020/Docs/ACTS/ACT153/ACT153%20As%20Enacted.pdf'],
+        ['Vermont', 'US-VT', 'Absolute emissions reduction', '40', 'percent', '1990', '2030', '', 'https://legislature.vermont.gov/Documents/2020/Docs/ACTS/ACT153/ACT153%20As%20Enacted.pdf'],
+        ['Vermont', 'US-VT', 'Absolute emissions reduction', '80', 'percent', '1990', '2050', '', 'https://legislature.vermont.gov/Documents/2020/Docs/ACTS/ACT153/ACT153%20As%20Enacted.pdf'],
+        ['Washington', 'US-WA', 'Absolute emissions reduction', '0', 'percent', '1990', '2020', '', 'https://lawfilesext.leg.wa.gov/biennium/2019-20/Pdf/Bills/Session%20Laws/House/2311-S2.SL.pdf#page=1'],
+        ['Washington', 'US-WA', 'Absolute emissions reduction', '45', 'percent', '1990', '2030', '', 'https://lawfilesext.leg.wa.gov/biennium/2019-20/Pdf/Bills/Session%20Laws/House/2311-S2.SL.pdf#page=1'],
+        ['Washington', 'US-WA', 'Absolute emissions reduction', '70', 'percent', '1990', '2040', '', 'https://lawfilesext.leg.wa.gov/biennium/2019-20/Pdf/Bills/Session%20Laws/House/2311-S2.SL.pdf#page=1'],
+        ['Washington', 'US-WA', 'Absolute emissions reduction', '95', 'percent', '1990', '2050', '', 'https://lawfilesext.leg.wa.gov/biennium/2019-20/Pdf/Bills/Session%20Laws/House/2311-S2.SL.pdf#page=1'],
+        ['Wisconsin', 'US-WI', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', '26-28', 'https://evers.wi.gov/Documents/EO%20038%20Clean%20Energy.pdf'],
     ]
 
     columns =[
@@ -2043,22 +1999,19 @@ def harmonize_us_climate_alliance_pledge():
         'target_unit',
         'baseline_year',
         'target_year', 
-        'actual_range'
+        'actual_range',
+        'URL'
     ]
 
     # dataset in pandas dataframe
-    df_data = pd.DataFrame(climateAllianceData, columns = columns)
-    df_urls = pd.DataFrame(stateCommitmentURLs, columns =['state', 'URL'])
-
-    # merge datasets
-    df = pd.merge(df_data, df_urls, on='state', how='left')
+    df = pd.DataFrame(climateAllianceData, columns = columns)
 
     # create datasource_id
-    df['datasource_id'] = datasourceDict['datasource_id']
+    df['datasource_id'] = dataSourceDict['datasource_id']
 
     # create emissions_id columns
     df['target_id'] = df.apply(lambda row: 
-                                  f"{publisherDict['id']}:{row['actor_id']}:{row['target_year']}",
+                                  f"{dataSourceDict['publisher']}:{row['actor_id']}:{row['target_year']}",
                                   axis=1)
 
     # select relevant columns
@@ -2093,5 +2046,4 @@ def harmonize_us_climate_alliance_pledge():
     df_out = df_out.sort_values(by=['actor_id', 'target_year'])
 
     # convert to csv
-    tableName = 'Target'
     df_out.to_csv(f'{out_dir}/{tableName}.csv', index=False)
