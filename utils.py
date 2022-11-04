@@ -1920,3 +1920,178 @@ def harmonize_eucom_pledges(fl=None,
     df_target.to_csv(f'{out_dir}/{tableName}.csv', index=False)
 
     return df
+
+
+def harmonize_us_climate_alliance_pledge():
+    # output directory
+    outputDir = './data_targets/subnational/US_climate_alliance/'
+    out_dir = Path(outputDir).as_posix()
+
+    # create out_dir if does not exist
+    make_dir(path=out_dir)
+
+    # Publisher table
+    publisherDict = {
+        'id': 'US_climate_alliance',
+        'name': 'United States Climate Alliance',
+        'URL': 'http://www.usclimatealliance.org/' 
+    }
+
+    write_to_csv(outputDir=outputDir, 
+                 tableName='Publisher', 
+                 dataDict=publisherDict, 
+                 mode='w')
+
+    # DataSource table
+    datasourceDict = {
+        'datasource_id': 'US_climate_alliance:2022',
+        'name': 'US Climate Alliance ',
+        'publisher': 'US_climate_alliance',
+        'published': '2022-11-03',
+        'URL': 'http://www.usclimatealliance.org/state-climate-energy-policies'
+    }
+
+    write_to_csv(outputDir=outputDir, 
+                 tableName='DataSource', 
+                 dataDict=datasourceDict, 
+                 mode='w')
+
+    # raw data for climate alliance
+    stateCommitmentURLs = [
+        ['California' ,'https://ww2.arb.ca.gov/sites/default/files/2022-05/2022-draft-sp.pdf'],
+        ['Colorado', 'https://energyoffice.colorado.gov/climate-energy/ghg-pollution-reduction-roadmap'],
+        ['Connecticut', 'https://portal.ct.gov/-/media/DEEP/climatechange/GC3/GC3_Phase1_Report_Jan2021.pdf'],
+        ['Delaware', 'https://documents.dnrec.delaware.gov/energy/Documents/Climate/Plan/Delaware-Climate-Action-Plan-2021.pdf'],
+        ['Hawaii', 'https://hawaii2050.hawaii.gov/wp-content/uploads/2021/07/FINAL-Hawaii-2050-Sustainability-Plan-web-1.pdf'],
+        ['Illinois', 'https://www.ilga.gov/legislation/102/SB/10200SB2408lv.htm'],
+        ['Louisiana', 'https://gov.louisiana.gov/assets/docs/CCI-Task-force/CAP/Climate_Action_Plan_FINAL_3.pdf'],
+        ['Maine', 'https://www.maine.gov/climateplan/sites/maine.gov.climateplan/files/inline-files/MaineWontWait_December2020_printable_12.1.20.pdf'],
+        ['Maryland', 'https://www.gfrlaw.com/what-we-do/insights/climate-solutions-now-act-2022'],
+        ['Massachusetts', 'https://www.mass.gov/doc/clean-energy-and-climate-plan-for-2025-and-2030/download'],
+        ['Michigan', 'https://www.michigan.gov/egle/-/media/Project/Websites/egle/Documents/Offices/OCE/MI-Healthy-Climate-Plan.pdf?rev=d13f4adc2b1d45909bd708cafccbfffa'],
+        ['Minnesota', 'https://climate.state.mn.us/sites/climate-action/files/Climate%20Action%20Framework.pdf'],
+        ['Nevada', 'https://climateaction.nv.gov/wp-content/uploads/2021/01/NVClimateStrategy_011921.pdf'],
+        ['New Jersey', 'https://nj.gov/infobank/eo/056murphy/pdf/EO-274.pdf'],
+        ['New Mexico', 'https://www.climateaction.nm.gov/wp-content/uploads/2022/05/NMClimateChange_2021_final.pdf'],
+        ['New York', 'https://climate.ny.gov/-/media/Project/Climate/Files/Draft-Scoping-Plan.pdf'],
+        ['North Carolina', 'https://governor.nc.gov/media/2907/open'],
+        ['Oregon', 'https://oeconline.org/oregon-climate-action-plan/'],
+        ['Pennsylvania', 'http://www.depgreenport.state.pa.us/elibrary/GetDocument?docId=3925177&DocName=2021%20PENNSYLVANIA%20CLIMATE%20ACTION%20PLAN.PDF'],
+        ['Puerto Rico', 'https://www.ncsl.org/research/energy/greenhouse-gas-emissions-reduction-targets-and-market-based-policies.aspx#:~:text=Description%3A%20In%202019%2C%20Puerto%20Rico,targets%20of%20100%25%20by%202041.'],
+        ['Rhode Island', 'https://www.c2es.org/wp-content/uploads/2018/11/RI_2016_Action_Plan.pdf'],
+        ['Vermont', 'https://outside.vermont.gov/agency/anr/climatecouncil/Shared%20Documents/Initial%20Climate%20Action%20Plan%20-%20Final%20-%2012-1-21.pdf'],
+        ['Washington', 'https://ecology.wa.gov/Blog/Posts/February-2022/The-Climate-Commitment-Act-Washington-s-Path-to-Ca'],
+        ['Wisconsin', 'https://climatechange.wi.gov/Documents/Final%20Report/GovernorsTaskForceonClimateChangeReport-LowRes.pdf'],
+    ]
+
+    climateAllianceData = [
+        ['California', 'US-CA', 'Absolute emissions reduction', '40', 'percent', '1990', '2030', ''] ,
+        ['Colorado', 'US-CO', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', ''], 
+        ['Colorado', 'US-CO', 'Absolute emissions reduction', '50', 'percent', '2005', '2030', ''], 
+        ['Colorado', 'US-CO', 'Absolute emissions reduction', '90', 'percent', '2005', '2050', ''], 
+        ['Connecticut', 'US-CT', 'Absolute emissions reduction', '45', 'percent', '2001', '2030', ''],
+        ['Delaware', 'US-DE', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', '26-28'],
+        ['Hawaii', 'US-HI', 'Absolute emissions reduction', '50', 'percent', '2005', '2030', ''], 
+        ['Illinois', 'US-IL', 'Absolute emissions reduction', '26', 'percent', '2005', '2030', '26-28'],
+        ['Louisiana', 'US-LA', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', '26-28'],
+        ['Louisiana', 'US-LA', 'Absolute emissions reduction', '40', 'percent', '2005', '2030', '40-50'],
+        ['Louisiana', 'US-LA', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', ''],
+        ['Maine', 'US-ME', 'Absolute emissions reduction', '45', 'percent', '1990', '2030', ''],
+        ['Maine', 'US-ME', 'Absolute emissions reduction', '80', 'percent', '1990', '2050', ''],
+        ['Maryland', 'US-MD', 'Absolute emissions reduction', '60', 'percent', '2006', '2031', ''],
+        ['Maryland', 'US-MD', 'Absolute emissions reduction', '100', 'percent', '2006', '2045', ''],
+        ['Massachusetts', 'US-MA', 'Absolute emissions reduction', '33', 'percent', '1990', '2025', ''],
+        ['Massachusetts', 'US-MA', 'Absolute emissions reduction', '50', 'percent', '1990', '2030', ''],
+        ['Michigan', 'US-MI', 'Absolute emissions reduction', '28', 'percent', '2005', '2025', ''],
+        ['Michigan', 'US-MI', 'Absolute emissions reduction', '52', 'percent', '2005', '2030', ''],
+        ['Minnesota', 'US-MN', 'Absolute emissions reduction', '50', 'percent', '2005', '2030', ''],
+        ['Minnesota', 'US-MN', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', ''],
+        ['Nevada', 'US-NV', 'Absolute emissions reduction', '28', 'percent', '2005', '2025', ''],
+        ['Nevada', 'US-NV', 'Absolute emissions reduction', '45', 'percent', '2005', '2030', ''],
+        ['Nevada', 'US-NV', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', ''],
+        ['New Jersey', 'US-NJ', 'Absolute emissions reduction', '50', 'percent', '2006', '2030', ''], 
+        ['New Jersey', 'US-NJ', 'Absolute emissions reduction', '80', 'percent', '2006', '2050', ''],
+        ['New Mexico', 'US-NM', 'Absolute emissions reduction', '45', 'percent', '2005', '2030', ''],
+        ['New Mexico', 'US-NM', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', ''],
+        ['New York', 'US-NY', 'Absolute emissions reduction', '40', 'percent', '1990', '2030', ''],
+        ['New York', 'US-NY', 'Absolute emissions reduction', '85', 'percent', '1990', '2050', ''],
+        ['North Carolina', 'US-NC', 'Absolute emissions reduction', '50', 'percent', '2005', '2030', ''],
+        ['North Carolina', 'US-NC', 'Absolute emissions reduction', '100', 'percent', '2005', '2050', ''],
+        ['Oregon', 'US-OR', 'Absolute emissions reduction', '45', 'percent', '1990', '2035', ''],
+        ['Oregon', 'US-OR', 'Absolute emissions reduction', '80', 'percent', '1990', '2050', ''],
+        ['Pennsylvania', 'US-PA', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', ''],
+        ['Pennsylvania', 'US-PA', 'Absolute emissions reduction', '80', 'percent', '2005', '2050', ''],
+        ['Puerto Rico', 'US-PR', 'Absolute emissions reduction', '50', 'percent', '2019', '2025', ''],
+        ['Rhode Island', 'US-RI', 'Absolute emissions reduction', '10', 'percent', '1990', '2020', ''],
+        ['Rhode Island', 'US-RI', 'Absolute emissions reduction', '45', 'percent', '1990', '2035', ''],
+        ['Rhode Island', 'US-RI', 'Absolute emissions reduction', '80', 'percent', '1990', '2050', ''],
+        ['Vermont', 'US-VT', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', ''],
+        ['Vermont', 'US-VT', 'Absolute emissions reduction', '40', 'percent', '2005', '2030', ''],
+        ['Vermont', 'US-VT', 'Absolute emissions reduction', '80', 'percent', '2005', '2050', ''],
+        ['Washington', 'US-WA', 'Absolute emissions reduction', '0', 'percent', '1990', '2020', ''],
+        ['Washington', 'US-WA', 'Absolute emissions reduction', '45', 'percent', '1990', '2030', ''],
+        ['Washington', 'US-WA', 'Absolute emissions reduction', '70', 'percent', '1990', '2040', ''],
+        ['Washington', 'US-WA', 'Absolute emissions reduction', '95', 'percent', '1990', '2050', ''],
+        ['Wisconsin', 'US-WI', 'Absolute emissions reduction', '26', 'percent', '2005', '2025', '26-28'],
+    ]
+
+    columns =[
+        'state', 
+        'actor_id', 
+        'target_type', 
+        'target_value', 
+        'target_unit',
+        'baseline_year',
+        'target_year', 
+        'actual_range'
+    ]
+
+    # dataset in pandas dataframe
+    df_data = pd.DataFrame(climateAllianceData, columns = columns)
+    df_urls = pd.DataFrame(stateCommitmentURLs, columns =['state', 'URL'])
+
+    # merge datasets
+    df = pd.merge(df_data, df_urls, on='state', how='left')
+
+    # create datasource_id
+    df['datasource_id'] = datasourceDict['datasource_id']
+
+    # create emissions_id columns
+    df['target_id'] = df.apply(lambda row: 
+                                  f"{publisherDict['id']}:{row['actor_id']}:{row['target_year']}",
+                                  axis=1)
+
+    # select relevant columns
+    columns = [
+        "target_id",
+        "actor_id",
+        "target_type",
+        "baseline_year",
+        "target_year",
+        "target_value",
+        'target_unit',
+        "URL",
+        "datasource_id",
+    ]
+
+    df_out = df[columns]
+
+    # ensure type is correct
+    df_out = df_out.astype({
+        "target_id": str,
+        "actor_id": str,
+        "target_type": str,
+        "baseline_year": int,
+        "target_year": int,
+        "target_value": int,
+        'target_unit': str,
+        "URL": str,
+        "datasource_id": str
+    })
+
+    # sort by actor_id and target_year
+    df_out = df_out.sort_values(by=['actor_id', 'target_year'])
+
+    # convert to csv
+    tableName = 'Target'
+    df_out.to_csv(f'{out_dir}/{tableName}.csv', index=False)
