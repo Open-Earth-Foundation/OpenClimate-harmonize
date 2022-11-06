@@ -3,7 +3,7 @@ import requests
 
 apihost = None
 INPUT_FILE = "source/Wikidata-Subnational-Area/wikidata-subnational-area.csv"
-OUTPUT_DIR = "data_contextual/subnational/territory/OEF:WD:subnational-area"
+OUTPUT_DIR = "data_contextual/subnational/territory/OEF:WD:subnational-area:20221106"
 
 PUBLISHER = {
     "id": "OEF:WD",
@@ -12,10 +12,10 @@ PUBLISHER = {
 }
 
 DATASOURCE = {
-    "datasource_id": "OEF:WD:subnational-area:20221103",
+    "datasource_id": "OEF:WD:subnational-area:20221106",
     "name": "Wikidata extract of subnational objects and their areas",
     "publisher": PUBLISHER["id"],
-    "published": "2022-11-03",
+    "published": "2022-11-06",
     "URL": "https://github.com/Open-Earth-Foundation/OpenClimate-harmonize/tree/main/source/Wikidata-Subnational-Area"
 }
 
