@@ -88,7 +88,8 @@ Target <- x %>%
     "percent_achieved" = Percentage.of.target.achieved.so.far,
     "last_updated" = Last.update
   ) %>% 
-  select(-grep("\\.", names(.)))
+  select(-grep("\\.", names(.))) %>%
+  filter(if_all(c(target_year, target_value, baseline_year), ~!is.na(.x)))
 
 TargetTag <- Target %>%
   mutate(self_reported = 1, 
@@ -113,7 +114,8 @@ EmissionsAgg <- x %>%
          year = case_when(emission_type == "base" ~ Base.year,
                           TRUE ~ Target.year),
          emissions_id = paste0(datasource_id, ":", emission_type, ":", locode),
-         datasource_id = datasource_id) %>%
+         datasource_id = datasource_id,
+         total_emissions = as.integer(total_emissions)) %>%
   filter(!is.na(total_emissions)) %>%
   rename("actor_id" = locode) %>%
   select(actor_id, emissions_id, emission_type, year, total_emissions, datasource_id)
@@ -128,13 +130,18 @@ EmissionsAgg <- EmissionsAgg %>%
   select(-emission_type)
 
 Territory <- x %>%
-  select(City.Location) %>%
+  ungroup() %>%
+  select(City.Location, locode) %>%
+  rename("actor_id" = locode) %>%
   mutate(lat = gsub("POINT \\((.*) (.*)\\)", "\\2", City.Location), 
-         lng = gsub("POINT \\((.*) (.*)\\)", "\\1", City.Location))
+         lng = gsub("POINT \\((.*) (.*)\\)", "\\1", City.Location)) %>%
+  select(-City.Location)
 
 Population <- x %>%
-  select(Population, Population.Year) %>%
-  rename("population" = Population,
+  ungroup() %>%
+  select(Population, Population.Year, locode) %>%
+  rename("actor_id" = locode,
+         "population" = Population,
          "population_year" = Population.Year)
 
 Publisher <- data.frame(id = "CDP", name = "CDP",
@@ -156,6 +163,8 @@ write.csv(EmissionsTag, "Harmonized/EmissionsTag.csv",
 write.csv(Target, "Harmonized/Target.csv", 
           row.names = F, fileEncoding = "UTF-8")
 write.csv(TargetTag, "Harmonized/TargetTag.csv", 
+          row.names = F, fileEncoding = "UTF-8")
+write.csv(Tag, "Harmonized/Tag.csv", 
           row.names = F, fileEncoding = "UTF-8")
 write.csv(Publisher, "Harmonized/Publisher.csv", 
           row.names = F, fileEncoding = "UTF-8")

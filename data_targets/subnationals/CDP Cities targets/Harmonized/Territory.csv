@@ -1,555 +1,555 @@
-"name","iso","entity_type","City.Location","lat","lng"
-"Bogotá","COL","City","POINT (-74.0721 4.711)","4.711","-74.0721"
-"Manchester","GBR","City","POINT (-2.15783 53.4576)","53.4576","-2.15783"
-"Abuja","NGA","City","POINT (7.39857 9.07647)","9.07647","7.39857"
-"Murcia","ESP","City","POINT (-1.00495 37.799)","37.799","-1.00495"
-"Envigado","COL","City",NA,NA,NA
-"Niigata","JPN","City",NA,NA,NA
-"Barcelona","ESP","City","POINT (2.1775 41.3823)","41.3823","2.1775"
-"Takarazuka City","JPN","City",NA,NA,NA
-"Hong Kong","HKG","City","POINT (114.14 22.2881)","22.2881","114.14"
-"Toyama","JPN","City",NA,NA,NA
-"Pescara","ITA","City","POINT (14.2135 42.4639)","42.4639","14.2135"
-"Trondheim","NOR","City","POINT (10.395 63.4305)","63.4305","10.395"
-"Lund","SWE","City",NA,NA,NA
-"Helsingborg","SWE","City",NA,NA,NA
-"Naples","ITA","City","POINT (14.2514 40.842)","40.842","14.2514"
-"Naples","ITA","City","POINT (14.2514 40.842)","40.842","14.2514"
-"Bournemouth","GBR","City","POINT (-1.88076 50.7192)","50.7192","-1.88076"
-"Karsiyaka - Izmir","TUR","City","POINT (27.1152 38.4596)","38.4596","27.1152"
-"Wollongong","AUS","City","POINT (150.893 -34.4278)","-34.4278","150.893"
-"Falköping","SWE","City",NA,NA,NA
-"Kanazawa","JPN","City",NA,NA,NA
-"Quissamã","BRA","City",NA,NA,NA
-"Seoul","KOR","City","POINT (126.978 37.5665)","37.5665","126.978"
-"Adelaide","AUS","City","POINT (138.601 -34.9285)","-34.9285","138.601"
-"Shizuoka","JPN","City",NA,NA,NA
-"Seferihisar","TUR","City","POINT (26.8344 38.1951)","38.1951","26.8344"
-"Växjö","SWE","City","POINT (14.8091 56.8777)","56.8777","14.8091"
-"Podgorica","MNE","City","POINT (19.2594 42.4304)","42.4304","19.2594"
-"San José","CRI","City","POINT (9.9326 -84.0796)","-84.0796","9.9326"
-"Fredensborg","DNK","City","POINT (12.4058 55.9747)","55.9747","12.4058"
-"Hamamatsu","JPN","City",NA,NA,NA
-"Bolzano","ITA","City","POINT (11.3566 46.4997)","46.4997","11.3566"
-"Zapopan","MEX","City",NA,NA,NA
-"Nihonmatsu City","JPN","City",NA,NA,NA
-"Kristianstad","SWE","City",NA,NA,NA
-"Nottingham","GBR","City",NA,NA,NA
-"Nice","FRA","City","POINT (7.26195 43.7102)","43.7102","7.26195"
-"Dois Irmãos","BRA","City",NA,NA,NA
-"Cañas","CRI","City",NA,NA,NA
-"Hyderabad","IND","City",NA,NA,NA
-"Daegu","KOR","City",NA,NA,NA
-"Tegucigalpa","HND","City","POINT (-87.2044 14.1051)","14.1051","-87.2044"
-"Hvidovre","DNK","City","POINT (12.4754 55.6425)","55.6425","12.4754"
-"Helsingborg","SWE","City",NA,NA,NA
-"Kaoshiung","TWN","City","POINT (120.344 22.6297)","22.6297","120.344"
-"Alba Iulia","ROU","City","POINT (23.569 46.0823)","46.0823","23.569"
-"Nacala","MOZ","City","POINT (40.6854 -14.5656)","-14.5656","40.6854"
-"Vitoria-Gasteiz","ESP","City","POINT (-2.67 42.84)","42.84","-2.67"
-"Malang","IDN","City",NA,NA,NA
-"Curitiba","BRA","City","POINT (-49.2647 -25.4311)","-25.4311","-49.2647"
-"Heidelberg","DEU","City","POINT (8.67243 49.3988)","49.3988","8.67243"
-"Koriyama","JPN","City",NA,NA,NA
-"Campinas","BRA","City","POINT (-46.9372 -22.744)","-22.744","-46.9372"
-"Taipei","TWN","City","POINT (121.564 25.0375)","25.0375","121.564"
-"Ikoma","JPN","City",NA,NA,NA
-"Mount Barker","AUS","City",NA,NA,NA
-"Surat","IND","City",NA,NA,NA
-"Florence","ITA","City","POINT (11.2558 43.7696)","43.7696","11.2558"
-"Florence","ITA","City","POINT (11.2558 43.7696)","43.7696","11.2558"
-"Hong Kong","HKG","City","POINT (114.14 22.2881)","22.2881","114.14"
-"Taichung","TWN","City","POINT (120.647 24.1619)","24.1619","120.647"
-"Dar es Salaam","TZA","City","POINT (39.2083 -6.79235)","-6.79235","39.2083"
-"Tokyo","JPN","City","POINT (139.41 35.41)","35.41","139.41"
-"Vallentuna","SWE","City",NA,NA,NA
-"Sunderland","GBR","City",NA,NA,NA
-"Gladsaxe","DNK","City","POINT (12.4887 55.7335)","55.7335","12.4887"
-"Águeda","PRT","City","POINT (-8.44582 40.5753)","40.5753","-8.44582"
-"Cañas","CRI","City",NA,NA,NA
-"Recife","BRA","City","POINT (-34.8829 -8.05783)","-8.05783","-34.8829"
-"Makati","PHL","City","POINT (121.024 14.5547)","14.5547","121.024"
-"Umeå","SWE","City","POINT (20.263 63.8258)","63.8258","20.263"
-"Helsingborg","SWE","City",NA,NA,NA
-"Évora","PRT","City",NA,NA,NA
-"Kristianstad","SWE","City",NA,NA,NA
-"Torres Vedras","PRT","City","POINT (-9.30148 38.7637)","38.7637","-9.30148"
-"Kurashiki","JPN","City",NA,NA,NA
-"Crespo","ARG","City",NA,NA,NA
-"Sumaré","BRA","City","POINT (-47.2669 -22.8219)","-22.8219","-47.2669"
-"Belen","CRI","City","POINT (-84.1503 10.0035)","10.0035","-84.1503"
-"Vitoria-Gasteiz","ESP","City","POINT (-2.67 42.84)","42.84","-2.67"
-"Cordeirópolis","BRA","City",NA,NA,NA
-"Vallentuna","SWE","City",NA,NA,NA
-"Kawagoe","JPN","City",NA,NA,NA
-"Changwon","KOR","City","POINT (126.949 35.1542)","35.1542","126.949"
-"Vallentuna","SWE","City",NA,NA,NA
-"Koriyama","JPN","City",NA,NA,NA
-"San Isidro (Lima)","PER","City","POINT (-77.0273 -12.0977)","-12.0977","-77.0273"
-"Envigado","COL","City",NA,NA,NA
-"Envigado","COL","City",NA,NA,NA
-"Recife","BRA","City","POINT (-34.8829 -8.05783)","-8.05783","-34.8829"
-"Braga","PRT","City","POINT (-8.43821 41.5337)","41.5337","-8.43821"
-"Johannesburg","ZAF","City","POINT (28.0473 -26.2041)","-26.2041","28.0473"
-"Ljubljana","SVN","City","POINT (14.5058 46.0569)","46.0569","14.5058"
-"Guadalajara","MEX","City","POINT (-103.35 20.6597)","20.6597","-103.35"
-"Pereira","COL","City","POINT (-75.6906 4.80871)","4.80871","-75.6906"
-"Kristianstad","SWE","City",NA,NA,NA
-"Helsingborg","SWE","City",NA,NA,NA
-"Évora","PRT","City",NA,NA,NA
-"Mannheim","DEU","City","POINT (8.46603 49.4875)","49.4875","8.46603"
-"Kanazawa","JPN","City",NA,NA,NA
-"Lund","SWE","City",NA,NA,NA
-"Florianópolis","BRA","City","POINT (-48.5482 -27.595)","-27.595","-48.5482"
-"Amsterdam","NLD","City","POINT (4.89516 52.3702)","52.3702","4.89516"
-"Belen","CRI","City","POINT (-84.1503 10.0035)","10.0035","-84.1503"
-"Pingtung","TWN","City","POINT (120.47 22.6558)","22.6558","120.47"
-"Niigata","JPN","City",NA,NA,NA
-"Reykjavík","ISL","City","POINT (-21.8174 64.1265)","64.1265","-21.8174"
-"Kampala","UGA","City",NA,NA,NA
-"Amsterdam","NLD","City","POINT (4.89516 52.3702)","52.3702","4.89516"
-"Podgorica","MNE","City","POINT (19.2594 42.4304)","42.4304","19.2594"
-"Envigado","COL","City",NA,NA,NA
-"Lisbon","PRT","City","POINT (-9.13933 38.7223)","38.7223","-9.13933"
-"Lisbon","PRT","City","POINT (-9.13933 38.7223)","38.7223","-9.13933"
-"San Isidro (Lima)","PER","City","POINT (-77.0273 -12.0977)","-12.0977","-77.0273"
-"Lausanne","CHE","City",NA,NA,NA
-"Kadiovacik","TUR","City","POINT (26.5536 38.3434)","38.3434","26.5536"
-"Gdynia","POL","City","POINT (18.5305 54.5189)","54.5189","18.5305"
-"Belen","CRI","City","POINT (-84.1503 10.0035)","10.0035","-84.1503"
-"Campinas","BRA","City","POINT (-46.9372 -22.744)","-22.744","-46.9372"
-"Antalya","TUR","City",NA,NA,NA
-"Bristol","GBR","City",NA,NA,NA
-"Berlin","DEU","City","POINT (13.405 52.52)","52.52","13.405"
-"Recife","BRA","City","POINT (-34.8829 -8.05783)","-8.05783","-34.8829"
-"Elsinore","DNK","City","POINT (12.5921 56.0308)","56.0308","12.5921"
-"Kurashiki","JPN","City",NA,NA,NA
-"Milan","ITA","City","POINT (9.08635 45.8026)","45.8026","9.08635"
-"Milan","ITA","City","POINT (9.08635 45.8026)","45.8026","9.08635"
-"Trondheim","NOR","City","POINT (10.395 63.4305)","63.4305","10.395"
-"San Justo","ARG","City",NA,NA,NA
-"Parma","ITA","City","POINT (10.3279 44.8015)","44.8015","10.3279"
-"Envigado","COL","City",NA,NA,NA
-"San Antonio de Areco","ARG","City",NA,NA,NA
-"Cuenca","ECU","City","POINT (-79.0048 -2.90841)","-2.90841","-79.0048"
-"Musashino","JPN","City",NA,NA,NA
-"Helsingborg","SWE","City",NA,NA,NA
-"Edinburgh","GBR","City",NA,NA,NA
-"Zapopan","MEX","City",NA,NA,NA
-"Kuala Lumpur","MYS","City","POINT (101.687 3.139)","3.139","101.687"
-"Wellington","NZL","City","POINT (174.776 -41.2865)","-41.2865","174.776"
-"Sunderland","GBR","City",NA,NA,NA
-"Helsingborg","SWE","City",NA,NA,NA
-"Fredensborg","DNK","City","POINT (12.4058 55.9747)","55.9747","12.4058"
-"Utsunomiya City","JPN","City",NA,NA,NA
-"Nice","FRA","City","POINT (7.26195 43.7102)","43.7102","7.26195"
-"Sumaré","BRA","City","POINT (-47.2669 -22.8219)","-22.8219","-47.2669"
-"Recife","BRA","City","POINT (-34.8829 -8.05783)","-8.05783","-34.8829"
-"Le Havre","FRA","City","POINT (0.1 49.49)","49.49","0.1"
-"Ibadan","NGA","City","POINT (3.94704 7.37753)","7.37753","3.94704"
-"Akureyri","ISL","City","POINT (-18.1262 65.6885)","65.6885","-18.1262"
-"Helsingborg","SWE","City",NA,NA,NA
-"Guangzhou","CHN","City","POINT (113.264 23.1291)","23.1291","113.264"
-"Zapopan","MEX","City",NA,NA,NA
-"Taoyuan","TWN","City","POINT (121.301 24.9931)","24.9931","121.301"
-"Fredensborg","DNK","City","POINT (12.4058 55.9747)","55.9747","12.4058"
-"Quepos","CRI","City",NA,NA,NA
-"Bern","CHE","City",NA,NA,NA
-"Saitama City","JPN","City",NA,NA,NA
-"Suwon","KOR","City","POINT (126.805 37.17)","37.17","126.805"
-"San José","CRI","City","POINT (9.9326 -84.0796)","-84.0796","9.9326"
-"Rouen","FRA","City",NA,NA,NA
-"Porto","PRT","City","POINT (-8.6291 41.1579)","41.1579","-8.6291"
-"Sintra","PRT","City","POINT (-9.38811 38.7984)","38.7984","-9.38811"
-"Rouen","FRA","City",NA,NA,NA
-"San Isidro (Lima)","PER","City","POINT (-77.0273 -12.0977)","-12.0977","-77.0273"
-"Accra","GHA","City","POINT (-0.16819 5.56543)","5.56543","-0.16819"
-"Singapore","SGP","City","POINT (103.82 1.35208)","1.35208","103.82"
-"Ulsan","KOR","City",NA,NA,NA
-"Resistencia","ARG","City",NA,NA,NA
-"Quezon City","PHL","City","POINT (120.862 15.6835)","15.6835","120.862"
-"Handa","JPN","City",NA,NA,NA
-"Taipei","TWN","City","POINT (121.564 25.0375)","25.0375","121.564"
-"Rouen","FRA","City",NA,NA,NA
-"Wellington","NZL","City","POINT (174.776 -41.2865)","-41.2865","174.776"
-"Florence","ITA","City","POINT (11.2558 43.7696)","43.7696","11.2558"
-"Florence","ITA","City","POINT (11.2558 43.7696)","43.7696","11.2558"
-"Zagreb","HRV","City","POINT (15.9819 45.815)","45.815","15.9819"
-"Sincelejo","COL","City","POINT (-75.3906 9.30457)","9.30457","-75.3906"
-"Recife","BRA","City","POINT (-34.8829 -8.05783)","-8.05783","-34.8829"
-"Rio de Janeiro","BRA","City","POINT (-43.5614 -22.9054)","-22.9054","-43.5614"
-"Växjö","SWE","City","POINT (14.8091 56.8777)","56.8777","14.8091"
-"Basel","CHE","City","POINT (7.5928 47.5619)","47.5619","7.5928"
-"Gothenburg","SWE","City",NA,NA,NA
-"Gothenburg","SWE","City",NA,NA,NA
-"Abidjan","CIV","City","POINT (-4.0083 5.36)","5.36","-4.0083"
-"Sakuragawa","JPN","City",NA,NA,NA
-"Gothenburg","SWE","City",NA,NA,NA
-"Gothenburg","SWE","City",NA,NA,NA
-"Porto","PRT","City","POINT (-8.6291 41.1579)","41.1579","-8.6291"
-"Tegucigalpa","HND","City","POINT (-87.2044 14.1051)","14.1051","-87.2044"
-"Mora","SWE","City",NA,NA,NA
-"Chuncheon","KOR","City",NA,NA,NA
-"Chuncheon","KOR","City",NA,NA,NA
-"Ljubljana","SVN","City","POINT (14.5058 46.0569)","46.0569","14.5058"
-"Chihuahua","MEX","City","POINT (-106.076 28.6368)","28.6368","-106.076"
-"Hvidovre","DNK","City","POINT (12.4754 55.6425)","55.6425","12.4754"
-"Yasothon","THA","City",NA,NA,NA
-"Independencia","CHL","City","POINT (-68.8154 -32.8421)","-32.8421","-68.8154"
-"Bern","CHE","City",NA,NA,NA
-"Zürich","CHE","City","POINT (8.53918 47.3686)","47.3686","8.53918"
-"Paris","FRA","City","POINT (2.35222 48.8566)","48.8566","2.35222"
-"Odawara","JPN","City",NA,NA,NA
-"Canoas","BRA","City","POINT (-51.1862 -29.9133)","-29.9133","-51.1862"
-"Västervik","SWE","City","POINT (16.3484 57.9587)","57.9587","16.3484"
-"Amsterdam","NLD","City","POINT (4.89516 52.3702)","52.3702","4.89516"
-"Rouen","FRA","City",NA,NA,NA
-"Faro","PRT","City","POINT (-7.93044 37.0194)","37.0194","-7.93044"
-"Assisi","ITA","City","POINT (12.6196 43.0707)","43.0707","12.6196"
-"Hague","NLD","City","POINT (4.3007 52.0705)","52.0705","4.3007"
-"Faro","PRT","City","POINT (-7.93044 37.0194)","37.0194","-7.93044"
-"Wandsworth","GBR","City",NA,NA,NA
-"Gothenburg","SWE","City",NA,NA,NA
-"Gothenburg","SWE","City",NA,NA,NA
-"Barcelona","ESP","City","POINT (2.1775 41.3823)","41.3823","2.1775"
-"Singapore","SGP","City","POINT (103.82 1.35208)","1.35208","103.82"
-"Hangzhou","CHN","City",NA,NA,NA
-"Bern","CHE","City",NA,NA,NA
-"Oreamuno","CRI","City",NA,NA,NA
-"Denizli","TUR","City",NA,NA,NA
-"Fredensborg","DNK","City","POINT (12.4058 55.9747)","55.9747","12.4058"
-"Lubumbashi","COD","City","POINT (-27 11)","11","-27"
-"Daegu","KOR","City",NA,NA,NA
-"Quito","ECU","City","POINT (-78.5167 -0.2333)","-0.2333","-78.5167"
-"Bangkok","THA","City","POINT (100.556 13.7712)","13.7712","100.556"
-"Reykjavík","ISL","City","POINT (-21.8174 64.1265)","64.1265","-21.8174"
-"Padua","ITA","City","POINT (11.8768 45.4064)","45.4064","11.8768"
-"Padua","ITA","City","POINT (11.8768 45.4064)","45.4064","11.8768"
-"Monaco","MCO","City","POINT (7.42081 43.7374)","43.7374","7.42081"
-"Lucca","ITA","City","POINT (10.6174 43.8399)","43.8399","10.6174"
-"Cañas","CRI","City",NA,NA,NA
-"Uranga","ARG","City",NA,NA,NA
-"Bogor","IDN","City","POINT (106.806 -6.5971)","-6.5971","106.806"
-"Gothenburg","SWE","City",NA,NA,NA
-"Gothenburg","SWE","City",NA,NA,NA
-"Sunderland","GBR","City",NA,NA,NA
-"Helsingborg","SWE","City",NA,NA,NA
-"Gothenburg","SWE","City",NA,NA,NA
-"Gothenburg","SWE","City",NA,NA,NA
-"Wandsworth","GBR","City",NA,NA,NA
-"Izmir","TUR","City",NA,NA,NA
-"Vitoria-Gasteiz","ESP","City","POINT (-2.67 42.84)","42.84","-2.67"
-"Yeosu","KOR","City",NA,NA,NA
-"Campinas","BRA","City","POINT (-46.9372 -22.744)","-22.744","-46.9372"
-"Dar es Salaam","TZA","City","POINT (39.2083 -6.79235)","-6.79235","39.2083"
-"Dubai","ARE","City","POINT (55.2708 25.2048)","25.2048","55.2708"
-"Lund","SWE","City",NA,NA,NA
-"Nice","FRA","City","POINT (7.26195 43.7102)","43.7102","7.26195"
-"Portoviejo","ECU","City",NA,NA,NA
-"Shizuoka","JPN","City",NA,NA,NA
-"Chacabuco","ARG","City",NA,NA,NA
-"Bangkok","THA","City","POINT (100.556 13.7712)","13.7712","100.556"
-"Rotorua Lakes","NZL","City",NA,NA,NA
-"Helsingborg","SWE","City",NA,NA,NA
-"Hague","NLD","City","POINT (4.3007 52.0705)","52.0705","4.3007"
-"Surat","IND","City",NA,NA,NA
-"Zürich","CHE","City","POINT (8.53918 47.3686)","47.3686","8.53918"
-"Rajkot","IND","City",NA,NA,NA
-"Glasgow","GBR","City","POINT (-4.21278 55.8593)","55.8593","-4.21278"
-"Sunderland","GBR","City",NA,NA,NA
-"Hwaseong","KOR","City",NA,NA,NA
-"Zaragoza","ESP","City","POINT (-0.88701 41.6086)","41.6086","-0.88701"
-"Kyoto City","JPN","City",NA,NA,NA
-"Zürich","CHE","City","POINT (8.53918 47.3686)","47.3686","8.53918"
-"Desamparados","CRI","City",NA,NA,NA
-"Rio de Janeiro","BRA","City","POINT (-43.5614 -22.9054)","-22.9054","-43.5614"
-"Nice","FRA","City","POINT (7.26195 43.7102)","43.7102","7.26195"
-"Curitiba","BRA","City","POINT (-49.2647 -25.4311)","-25.4311","-49.2647"
-"San Isidro (Lima)","PER","City","POINT (-77.0273 -12.0977)","-12.0977","-77.0273"
-"Reconquista","ARG","City",NA,NA,NA
-"Dakar","SEN","City","POINT (-17.366 14.7645)","14.7645","-17.366"
-"Belen","CRI","City","POINT (-84.1503 10.0035)","10.0035","-84.1503"
-"Bologna","ITA","City","POINT (11.3387 44.4938)","44.4938","11.3387"
-"Amsterdam","NLD","City","POINT (4.89516 52.3702)","52.3702","4.89516"
-"Hokuto","JPN","City",NA,NA,NA
-"Copenhagen","DNK","City","POINT (12.5683 55.6761)","55.6761","12.5683"
-"Tegucigalpa","HND","City","POINT (-87.2044 14.1051)","14.1051","-87.2044"
-"Umeå","SWE","City","POINT (20.263 63.8258)","63.8258","20.263"
-"Turin","ITA","City","POINT (7.668 45.1006)","45.1006","7.668"
-"Turin","ITA","City","POINT (7.668 45.1006)","45.1006","7.668"
-"Baguio","PHL","City",NA,NA,NA
-"San José","CRI","City","POINT (9.9326 -84.0796)","-84.0796","9.9326"
-"Monaco","MCO","City","POINT (7.42081 43.7374)","43.7374","7.42081"
-"Santiago","CHL","City","POINT (-70.6693 -33.4489)","-33.4489","-70.6693"
-"Dunedin","NZL","City",NA,NA,NA
-"Toyama","JPN","City",NA,NA,NA
-"Puerto Vallarta","MEX","City",NA,NA,NA
-"Umeå","SWE","City","POINT (20.263 63.8258)","63.8258","20.263"
-"Recife","BRA","City","POINT (-34.8829 -8.05783)","-8.05783","-34.8829"
-"Lund","SWE","City",NA,NA,NA
-"Kampala","UGA","City",NA,NA,NA
-"Curitiba","BRA","City","POINT (-49.2647 -25.4311)","-25.4311","-49.2647"
-"Godoy Cruz","ARG","City",NA,NA,NA
-"Gothenburg","SWE","City",NA,NA,NA
-"Gothenburg","SWE","City",NA,NA,NA
-"Quepos","CRI","City",NA,NA,NA
-"Dar es Salaam","TZA","City","POINT (39.2083 -6.79235)","-6.79235","39.2083"
-"Viseu","PRT","City","POINT (-7.91247 40.6566)","40.6566","-7.91247"
-"Blitar","IDN","City",NA,NA,NA
-"Nottingham","GBR","City",NA,NA,NA
-"Daegu","KOR","City",NA,NA,NA
-"Bangkok","THA","City","POINT (100.556 13.7712)","13.7712","100.556"
-"Bekasi","IDN","City",NA,NA,NA
-"Basel","CHE","City","POINT (7.5928 47.5619)","47.5619","7.5928"
-"Tegucigalpa","HND","City","POINT (-87.2044 14.1051)","14.1051","-87.2044"
-"Ville De Charleroi","BEL","City","POINT (4.4446 50.4108)","50.4108","4.4446"
-"Kristianstad","SWE","City",NA,NA,NA
-"Lausanne","CHE","City",NA,NA,NA
-"Wroclaw","POL","City","POINT (17.0385 51.1079)","51.1079","17.0385"
-"Wroclaw","POL","City","POINT (17.0385 51.1079)","51.1079","17.0385"
-"Wroclaw","POL","City","POINT (17.0385 51.1079)","51.1079","17.0385"
-"Kaoshiung","TWN","City","POINT (120.344 22.6297)","22.6297","120.344"
-"Cocody","CIV","City","POINT (-3.9674 5.3602)","5.3602","-3.9674"
-"Aarhus","DNK","City","POINT (10.1374 56.1684)","56.1684","10.1374"
-"Himeji","JPN","City",NA,NA,NA
-"Temuco","CHL","City",NA,NA,NA
-"Yokohama","JPN","City","POINT (139.638 35.4437)","35.4437","139.638"
-"Tokyo","JPN","City","POINT (139.41 35.41)","35.41","139.41"
-"Dangjin City","KOR","City",NA,NA,NA
-"San Isidro (Lima)","PER","City","POINT (-77.0273 -12.0977)","-12.0977","-77.0273"
-"Rosario","ARG","City",NA,NA,NA
-"Middelfart","DNK","City","POINT (9.87264 55.471)","55.471","9.87264"
-"Rosario","ARG","City",NA,NA,NA
-"Trelleborg","SWE","City","POINT (13.1569 55.3751)","55.3751","13.1569"
-"Fortaleza","BRA","City","POINT (-48.3936 -10.7183)","-10.7183","-48.3936"
-"Berlin","DEU","City","POINT (13.405 52.52)","52.52","13.405"
-"Sydney","AUS","City","POINT (151.207 -33.8675)","-33.8675","151.207"
-"Lagos","NGA","City","POINT (3.3792 6.52437)","6.52437","3.3792"
-"Bristol","GBR","City",NA,NA,NA
-"Salvador","BRA","City","POINT (-38.5023 -12.973)","-12.973","-38.5023"
-"Belo Horizonte","BRA","City","POINT (-43.9345 -19.9167)","-19.9167","-43.9345"
-"Baguio","PHL","City",NA,NA,NA
-"Daegu","KOR","City",NA,NA,NA
-"Porto","PRT","City","POINT (-8.6291 41.1579)","41.1579","-8.6291"
-"Sunderland","GBR","City",NA,NA,NA
-"Winchester","GBR","City",NA,NA,NA
-"Barcelona","ESP","City","POINT (2.1775 41.3823)","41.3823","2.1775"
-"Rotorua Lakes","NZL","City",NA,NA,NA
-"San Isidro (Lima)","PER","City","POINT (-77.0273 -12.0977)","-12.0977","-77.0273"
-"San José","CRI","City","POINT (9.9326 -84.0796)","-84.0796","9.9326"
-"Handa","JPN","City",NA,NA,NA
-"Podgorica","MNE","City","POINT (19.2594 42.4304)","42.4304","19.2594"
-"Linköping","SWE","City","POINT (15.6216 58.4109)","58.4109","15.6216"
-"Lausanne","CHE","City",NA,NA,NA
-"Abidjan","CIV","City","POINT (-4.0083 5.36)","5.36","-4.0083"
-"Madrid","ESP","City","POINT (-3.38756 40.1076)","40.1076","-3.38756"
-"Pietermaritzburg","ZAF","City","POINT (30.3794 -29.6006)","-29.6006","30.3794"
-"Auckland","NZL","City","POINT (174.742 -36.8153)","-36.8153","174.742"
-"Helsingborg","SWE","City",NA,NA,NA
-"Tangerang","IDN","City",NA,NA,NA
-"Serra Talhada","BRA","City",NA,NA,NA
-"Hangzhou","CHN","City",NA,NA,NA
-"Chuncheon","KOR","City",NA,NA,NA
-"Zürich","CHE","City","POINT (8.53918 47.3686)","47.3686","8.53918"
-"Medellìn","COL","City","POINT (-75.5735 6.22729)","6.22729","-75.5735"
-"Cape Town","ZAF","City","POINT (18.4239 -33.9253)","-33.9253","18.4239"
-"Recife","BRA","City","POINT (-34.8829 -8.05783)","-8.05783","-34.8829"
-"Hong Kong","HKG","City","POINT (114.14 22.2881)","22.2881","114.14"
-"Rio de Janeiro","BRA","City","POINT (-43.5614 -22.9054)","-22.9054","-43.5614"
-"Niigata","JPN","City",NA,NA,NA
-"Auckland","NZL","City","POINT (174.742 -36.8153)","-36.8153","174.742"
-"San Isidro (Lima)","PER","City","POINT (-77.0273 -12.0977)","-12.0977","-77.0273"
-"Florence","ITA","City","POINT (11.2558 43.7696)","43.7696","11.2558"
-"Florence","ITA","City","POINT (11.2558 43.7696)","43.7696","11.2558"
-"Oki","JPN","City",NA,NA,NA
-"Tokyo","JPN","City","POINT (139.41 35.41)","35.41","139.41"
-"Rouen","FRA","City",NA,NA,NA
-"Takarazuka City","JPN","City",NA,NA,NA
-"San Isidro (Lima)","PER","City","POINT (-77.0273 -12.0977)","-12.0977","-77.0273"
-"Fafe","PRT","City","POINT (-8.17286 41.4508)","41.4508","-8.17286"
-"Oslo","NOR","City","POINT (10.7522 59.9139)","59.9139","10.7522"
-"Valencia","ESP","City","POINT (-0.3763 39.4699)","39.4699","-0.3763"
-"Vitoria-Gasteiz","ESP","City","POINT (-2.67 42.84)","42.84","-2.67"
-"Espoo","FIN","City","POINT (24.6559 60.2055)","60.2055","24.6559"
-"Toluca","MEX","City",NA,NA,NA
-"Bergen","NOR","City",NA,NA,NA
-"Tarija","BOL","City","POINT (-63.4884 -21.2666)","-21.2666","-63.4884"
-"Dar es Salaam","TZA","City","POINT (39.2083 -6.79235)","-6.79235","39.2083"
-"Middelfart","DNK","City","POINT (9.87264 55.471)","55.471","9.87264"
-"Berlin","DEU","City","POINT (13.405 52.52)","52.52","13.405"
-"Middelfart","DNK","City","POINT (9.87264 55.471)","55.471","9.87264"
-"Arendal","NOR","City","POINT (8.77245 58.4618)","58.4618","8.77245"
-"Guimarães","PRT","City","POINT (-8.29224 41.4443)","41.4443","-8.29224"
-"Hermosillo","MEX","City","POINT (-110.961 29.0892)","29.0892","-110.961"
-"Sunderland","GBR","City",NA,NA,NA
-"Barcelona","ESP","City","POINT (2.1775 41.3823)","41.3823","2.1775"
-"Umeå","SWE","City","POINT (20.263 63.8258)","63.8258","20.263"
-"Berlin","DEU","City","POINT (13.405 52.52)","52.52","13.405"
-"Barcelona","ESP","City","POINT (2.1775 41.3823)","41.3823","2.1775"
-"Can Tho City","VNM","City",NA,NA,NA
-"Chuncheon","KOR","City",NA,NA,NA
-"Mexico City","MEX","City","POINT (-99.1332 19.4326)","19.4326","-99.1332"
-"Cardiff","GBR","City","POINT (-3.17909 51.4816)","51.4816","-3.17909"
-"Reykjavík","ISL","City","POINT (-21.8174 64.1265)","64.1265","-21.8174"
-"Malmö","SWE","City","POINT (13.0038 55.605)","55.605","13.0038"
-"Caruaru","BRA","City",NA,NA,NA
-"Suwon","KOR","City","POINT (126.805 37.17)","37.17","126.805"
-"Nijmegen","NLD","City","POINT (5.84282 51.8449)","51.8449","5.84282"
-"Belen","CRI","City","POINT (-84.1503 10.0035)","10.0035","-84.1503"
-"Melbourne","AUS","City","POINT (144.963 -37.8141)","-37.8141","144.963"
-"Klaipeda","LTU","City",NA,NA,NA
-"Cape Town","ZAF","City","POINT (18.4239 -33.9253)","-33.9253","18.4239"
-"Hvidovre","DNK","City","POINT (12.4754 55.6425)","55.6425","12.4754"
-"Kochi","IND","City","POINT (76.2673 9.93123)","9.93123","76.2673"
-"Genoa","ITA","City","POINT (9.31841 44.348)","44.348","9.31841"
-"Genoa","ITA","City","POINT (9.31841 44.348)","44.348","9.31841"
-"Gaziantep","TUR","City",NA,NA,NA
-"Adelaide","AUS","City","POINT (138.601 -34.9285)","-34.9285","138.601"
-"Mérida","MEX","City","POINT (-89.5926 20.9674)","20.9674","-89.5926"
-"Kristianstad","SWE","City",NA,NA,NA
-"Bournemouth","GBR","City","POINT (-1.88076 50.7192)","50.7192","-1.88076"
-"Tsukuba","JPN","City",NA,NA,NA
-"Cosenza","ITA","City",NA,NA,NA
-"Ibaraki","JPN","City",NA,NA,NA
-"Tainan","TWN","City","POINT (120.227 22.9999)","22.9999","120.227"
-"Abidjan","CIV","City","POINT (-4.0083 5.36)","5.36","-4.0083"
-"Tshwane","ZAF","City","POINT (28.1881 -25.7461)","-25.7461","28.1881"
-"Lima","PER","City","POINT (-77.0283 -12.0433)","-12.0433","-77.0283"
-"Sofia","BGR","City","POINT (23.3219 42.6977)","42.6977","23.3219"
-"Cosenza","ITA","City",NA,NA,NA
-"Casablanca","MAR","City","POINT (-7.56806 33.5206)","33.5206","-7.56806"
-"San Carlos de Bariloche","ARG","City",NA,NA,NA
-"Manchester","GBR","City",NA,NA,NA
-"Umeå","SWE","City","POINT (20.263 63.8258)","63.8258","20.263"
-"Helsingborg","SWE","City",NA,NA,NA
-"Venado Tuerto","ARG","City",NA,NA,NA
-"Matsuyama","JPN","City",NA,NA,NA
-"Gaziantep","TUR","City",NA,NA,NA
-"Nijmegen","NLD","City","POINT (5.84282 51.8449)","51.8449","5.84282"
-"Gothenburg","SWE","City",NA,NA,NA
-"Gothenburg","SWE","City",NA,NA,NA
-"Barcelona","ESP","City","POINT (2.1775 41.3823)","41.3823","2.1775"
-"Sunderland","GBR","City",NA,NA,NA
-"Kinmen","TWN","City",NA,NA,NA
-"Rostock","DEU","City","POINT (12.1405 54.0887)","54.0887","12.1405"
-"Valdivia","CHL","City",NA,NA,NA
-"Sumaré","BRA","City","POINT (-47.2669 -22.8219)","-22.8219","-47.2669"
-"Surat","IND","City",NA,NA,NA
-"Itabashi","JPN","City",NA,NA,NA
-"Recife","BRA","City","POINT (-34.8829 -8.05783)","-8.05783","-34.8829"
-"Oki","JPN","City",NA,NA,NA
-"Rotterdam","NLD","City","POINT (4.45093 51.9164)","51.9164","4.45093"
-"Amsterdam","NLD","City","POINT (4.89516 52.3702)","52.3702","4.89516"
-"Cartagena","COL","City","POINT (-75.5501 10.4218)","10.4218","-75.5501"
-"Tangerang","IDN","City",NA,NA,NA
-"Wandsworth","GBR","City",NA,NA,NA
-"Mendoza","ARG","City","POINT (-68.8458 -32.8894)","-32.8894","-68.8458"
-"Manchester","GBR","City",NA,NA,NA
-"La Marsa","TUN","City","POINT (10.3218 36.8725)","36.8725","10.3218"
-"Cocody","CIV","City","POINT (-3.9674 5.3602)","5.3602","-3.9674"
-"Abidjan","CIV","City","POINT (-4.0083 5.36)","5.36","-4.0083"
-"Corrientes","ARG","City",NA,NA,NA
-"Antananarivo","MDG","City","POINT (47.5079 -18.8792)","-18.8792","47.5079"
-"Torres Vedras","PRT","City","POINT (-9.30148 38.7637)","38.7637","-9.30148"
-"Roskilde","DNK","City","POINT (12.0878 55.6419)","55.6419","12.0878"
-"Quepos","CRI","City",NA,NA,NA
-"Toyama","JPN","City",NA,NA,NA
-"San Martín de los Andes","ARG","City",NA,NA,NA
-"San José","CRI","City","POINT (9.9326 -84.0796)","-84.0796","9.9326"
-"Kitakyushu","JPN","City",NA,NA,NA
-"Tbilisi","GEO","City","POINT (44.8271 41.7151)","41.7151","44.8271"
-"Hokuei","JPN","City",NA,NA,NA
-"Barcelona","ESP","City","POINT (2.1775 41.3823)","41.3823","2.1775"
-"Talca","CHL","City",NA,NA,NA
-"Campinas","BRA","City","POINT (-46.9372 -22.744)","-22.744","-46.9372"
-"Gothenburg","SWE","City",NA,NA,NA
-"Gothenburg","SWE","City",NA,NA,NA
-"Amman","JOR","City","POINT (35.9284 31.9454)","31.9454","35.9284"
-"Elsinore","DNK","City","POINT (12.5921 56.0308)","56.0308","12.5921"
-"Iida","JPN","City",NA,NA,NA
-"Sukabumi","IDN","City",NA,NA,NA
-"Dar es Salaam","TZA","City","POINT (39.2083 -6.79235)","-6.79235","39.2083"
-"Yamato","JPN","City",NA,NA,NA
-"San Isidro (Lima)","PER","City","POINT (-77.0273 -12.0977)","-12.0977","-77.0273"
-"Desamparados","CRI","City",NA,NA,NA
-"Providencia","CHL","City","POINT (-70.6092 -33.4313)","-33.4313","-70.6092"
-"Cuenca","ECU","City","POINT (-79.0048 -2.90841)","-2.90841","-79.0048"
-"Daegu","KOR","City",NA,NA,NA
-"Desamparados","CRI","City",NA,NA,NA
-"Sandnes","NOR","City",NA,NA,NA
-"Elsinore","DNK","City","POINT (12.5921 56.0308)","56.0308","12.5921"
-"Recife","BRA","City","POINT (-34.8829 -8.05783)","-8.05783","-34.8829"
-"Stockholm","SWE","City","POINT (18.0686 59.3293)","59.3293","18.0686"
-"Tainan","TWN","City","POINT (120.227 22.9999)","22.9999","120.227"
-"Myoko","JPN","City",NA,NA,NA
-"Shizuoka","JPN","City",NA,NA,NA
-"Culiacán","MEX","City",NA,NA,NA
-"Sunderland","GBR","City",NA,NA,NA
-"Kadiköy","TUR","City","POINT (29.0585 40.98)","40.98","29.0585"
-"Tainan","TWN","City","POINT (120.227 22.9999)","22.9999","120.227"
-"Kyoto City","JPN","City",NA,NA,NA
-"Reykjavík","ISL","City","POINT (-21.8174 64.1265)","64.1265","-21.8174"
-"Buenos Aires","ARG","City","POINT (-58.3816 -34.6037)","-34.6037","-58.3816"
-"Nihonmatsu City","JPN","City",NA,NA,NA
-"Semarang","IDN","City",NA,NA,NA
-"Dhaka","BGD","City","POINT (90.4125 23.8103)","23.8103","90.4125"
-"Ibaraki","JPN","City",NA,NA,NA
-"Skövde","SWE","City",NA,NA,NA
-"Riga","LVA","City","POINT (24.1052 56.9496)","56.9496","24.1052"
-"Istanbul","TUR","City","POINT (28.9784 41.0082)","41.0082","28.9784"
-"Myoko","JPN","City",NA,NA,NA
-"Buenos Aires","ARG","City","POINT (-58.3816 -34.6037)","-34.6037","-58.3816"
-"Umeå","SWE","City","POINT (20.263 63.8258)","63.8258","20.263"
-"Kampala","UGA","City",NA,NA,NA
-"Lund","SWE","City",NA,NA,NA
-"L'Aquila","ITA","City","POINT (13.3995 42.3505)","42.3505","13.3995"
-"L'Aquila","ITA","City","POINT (13.3995 42.3505)","42.3505","13.3995"
-"Heidelberg","DEU","City","POINT (8.67243 49.3988)","49.3988","8.67243"
-"Ocú","PAN","City",NA,NA,NA
-"Sunderland","GBR","City",NA,NA,NA
-"Vitoria-Gasteiz","ESP","City","POINT (-2.67 42.84)","42.84","-2.67"
-"Hvidovre","DNK","City","POINT (12.4754 55.6425)","55.6425","12.4754"
-"Nilüfer","TUR","City","POINT (28 40)","40","28"
-"Porto Velho","BRA","City","POINT (-40.3776 -20.3338)","-20.3338","-40.3776"
-"Lund","SWE","City",NA,NA,NA
-"Gibraltar","GIB","City","POINT (-5.35359 36.1408)","36.1408","-5.35359"
-"Cocody","CIV","City","POINT (-3.9674 5.3602)","5.3602","-3.9674"
-"Kitakyushu","JPN","City",NA,NA,NA
-"Comas","PER","City","POINT (-77.0667 -11.95)","-11.95","-77.0667"
-"Milan","ITA","City","POINT (9.08635 45.8026)","45.8026","9.08635"
-"Milan","ITA","City","POINT (9.08635 45.8026)","45.8026","9.08635"
-"Tsukuba","JPN","City",NA,NA,NA
-"Sydney","AUS","City","POINT (151.207 -33.8675)","-33.8675","151.207"
-"Muar","MYS","City",NA,NA,NA
-"Suita","JPN","City",NA,NA,NA
-"Sakuragawa","JPN","City",NA,NA,NA
-"Milan","ITA","City","POINT (9.08635 45.8026)","45.8026","9.08635"
-"Milan","ITA","City","POINT (9.08635 45.8026)","45.8026","9.08635"
-"Skövde","SWE","City",NA,NA,NA
-"Florence","ITA","City","POINT (11.2558 43.7696)","43.7696","11.2558"
-"Florence","ITA","City","POINT (11.2558 43.7696)","43.7696","11.2558"
-"Ljubljana","SVN","City","POINT (14.5058 46.0569)","46.0569","14.5058"
-"Addis Ababa","ETH","City","POINT (38.7544 9.02887)","9.02887","38.7544"
-"Balikpapan","IDN","City","POINT (116.831 -1.26539)","-1.26539","116.831"
-"New Taipei City","TWN","City","POINT (121.446 25.0111)","25.0111","121.446"
-"Ferrara","ITA","City","POINT (11.619 44.8357)","44.8357","11.619"
-"Salvador","BRA","City","POINT (-38.5023 -12.973)","-12.973","-38.5023"
-"Berlin","DEU","City","POINT (13.405 52.52)","52.52","13.405"
-"Southend on Sea Borough","GBR","City",NA,NA,NA
-"Roskilde","DNK","City","POINT (12.0878 55.6419)","55.6419","12.0878"
-"Celaya","MEX","City","POINT (-100.812 20.5222)","20.5222","-100.812"
-"Chiayi","TWN","City",NA,NA,NA
-"Montecarlo","ARG","City",NA,NA,NA
-"Melaka","MYS","City",NA,NA,NA
-"Kanazawa","JPN","City",NA,NA,NA
-"Araçatuba","BRA","City","POINT (-50.4328 -21.2089)","-21.2089","-50.4328"
-"Aarhus","DNK","City","POINT (10.1374 56.1684)","56.1684","10.1374"
-"Sorocaba","BRA","City","POINT (-47.4221 -23.4775)","-23.4775","-47.4221"
-"Yokosuka","JPN","City",NA,NA,NA
-"Kitakyushu","JPN","City",NA,NA,NA
-"Salvador","BRA","City","POINT (-38.5023 -12.973)","-12.973","-38.5023"
-"Curitiba","BRA","City","POINT (-49.2647 -25.4311)","-25.4311","-49.2647"
-"Kamakura","JPN","City",NA,NA,NA
-"Southend on Sea Borough","GBR","City",NA,NA,NA
-"Helsingborg","SWE","City",NA,NA,NA
-"Wellington","NZL","City","POINT (174.776 -41.2865)","-41.2865","174.776"
+"actor_id","lat","lng"
+"CO BOG","4.711","-74.0721"
+"GB MNC","53.4576","-2.15783"
+"NG ABV","9.07647","7.39857"
+"ES MJV","37.799","-1.00495"
+"CO ENV",NA,NA
+"JP KIJ",NA,NA
+"ES BCN","41.3823","2.1775"
+"JP TZK",NA,NA
+"HK HKG","22.2881","114.14"
+"JP TOY",NA,NA
+"IT PSR","42.4639","14.2135"
+"NO TRD","63.4305","10.395"
+"SE LUD",NA,NA
+"SE HEL",NA,NA
+"IT NAP","40.842","14.2514"
+"IT NAP","40.842","14.2514"
+"GB BOH","50.7192","-1.88076"
+"TR JKS","38.4596","27.1152"
+"AU WOL","-34.4278","150.893"
+"SE FKG",NA,NA
+"JP KNZ",NA,NA
+"BR QIA",NA,NA
+"KR SEL","37.5665","126.978"
+"AU ADL","-34.9285","138.601"
+"JP SHO",NA,NA
+"TR SFH","38.1951","26.8344"
+"SE VXO","56.8777","14.8091"
+"ME TGD","42.4304","19.2594"
+"CR SJO","-84.0796","9.9326"
+"DK FRE","55.9747","12.4058"
+"JP HMM",NA,NA
+"IT BZO","46.4997","11.3566"
+"MX ZAP",NA,NA
+"JP NQU",NA,NA
+"SE KID",NA,NA
+"GB NTG",NA,NA
+"FR NCE","43.7102","7.26195"
+"BR DIS",NA,NA
+"CR CAS",NA,NA
+"IN HYD",NA,NA
+"KR TAE",NA,NA
+"HN TGU","14.1051","-87.2044"
+"DK HVV","55.6425","12.4754"
+"SE HEL",NA,NA
+"TW KHH","22.6297","120.344"
+"RO ALI","46.0823","23.569"
+"MZ MNC","-14.5656","40.6854"
+"ES VIT","42.84","-2.67"
+"ID MLG",NA,NA
+"BR CWB","-25.4311","-49.2647"
+"DE HEI","49.3988","8.67243"
+"JP KIY",NA,NA
+"BR CPS","-22.744","-46.9372"
+"TW TPE","25.0375","121.564"
+"JP OQM",NA,NA
+"AU MBA",NA,NA
+"IN STV",NA,NA
+"IT FLR","43.7696","11.2558"
+"IT FLR","43.7696","11.2558"
+"HK HKG","22.2881","114.14"
+"TW TXG","24.1619","120.647"
+"TZ DAR","-6.79235","39.2083"
+"JP TYO","35.41","139.41"
+"SE VTA",NA,NA
+"GB SUN",NA,NA
+"DK GLX","55.7335","12.4887"
+"PT AGU","40.5753","-8.44582"
+"CR CAS",NA,NA
+"BR REC","-8.05783","-34.8829"
+"PH MTI","14.5547","121.024"
+"SE UME","63.8258","20.263"
+"SE HEL",NA,NA
+"PT EVR",NA,NA
+"SE KID",NA,NA
+"PT TVE","38.7637","-9.30148"
+"JP KUA",NA,NA
+"AR CEO",NA,NA
+"BR SME","-22.8219","-47.2669"
+"CR BLN","10.0035","-84.1503"
+"ES VIT","42.84","-2.67"
+"BR CRS",NA,NA
+"SE VTA",NA,NA
+"JP KWE",NA,NA
+"KR CHW","35.1542","126.949"
+"SE VTA",NA,NA
+"JP KIY",NA,NA
+"PE SDR","-12.0977","-77.0273"
+"CO ENV",NA,NA
+"CO ENV",NA,NA
+"BR REC","-8.05783","-34.8829"
+"PT BGZ","41.5337","-8.43821"
+"ZA JNB","-26.2041","28.0473"
+"SI LJU","46.0569","14.5058"
+"MX GDL","20.6597","-103.35"
+"CO PEI","4.80871","-75.6906"
+"SE KID",NA,NA
+"SE HEL",NA,NA
+"PT EVR",NA,NA
+"DE MHG","49.4875","8.46603"
+"JP KNZ",NA,NA
+"SE LUD",NA,NA
+"BR FLN","-27.595","-48.5482"
+"NL AMS","52.3702","4.89516"
+"CR BLN","10.0035","-84.1503"
+"TW PIF","22.6558","120.47"
+"JP KIJ",NA,NA
+"IS REY","64.1265","-21.8174"
+"UG KLA",NA,NA
+"NL AMS","52.3702","4.89516"
+"ME TGD","42.4304","19.2594"
+"CO ENV",NA,NA
+"PT LIS","38.7223","-9.13933"
+"PT LIS","38.7223","-9.13933"
+"PE SDR","-12.0977","-77.0273"
+"CH LAU",NA,NA
+"TR URL","38.3434","26.5536"
+"PL GDY","54.5189","18.5305"
+"CR BLN","10.0035","-84.1503"
+"BR CPS","-22.744","-46.9372"
+"TR AYT",NA,NA
+"GB BRS",NA,NA
+"DE BER","52.52","13.405"
+"BR REC","-8.05783","-34.8829"
+"DK HLS","56.0308","12.5921"
+"JP KUA",NA,NA
+"IT MIL","45.8026","9.08635"
+"IT MIL","45.8026","9.08635"
+"NO TRD","63.4305","10.395"
+"AR SJO",NA,NA
+"IT PMF","44.8015","10.3279"
+"CO ENV",NA,NA
+"AR SAO",NA,NA
+"EC CUE","-2.90841","-79.0048"
+"JP MUH",NA,NA
+"SE HEL",NA,NA
+"GB EDI",NA,NA
+"MX ZAP",NA,NA
+"MY KUL","3.139","101.687"
+"NZ WLG","-41.2865","174.776"
+"GB SUN",NA,NA
+"SE HEL",NA,NA
+"DK FRE","55.9747","12.4058"
+"JP UTO",NA,NA
+"FR NCE","43.7102","7.26195"
+"BR SME","-22.8219","-47.2669"
+"BR REC","-8.05783","-34.8829"
+"FR LEH","49.49","0.1"
+"NG IBA","7.37753","3.94704"
+"IS AKU","65.6885","-18.1262"
+"SE HEL",NA,NA
+"CN GGZ","23.1291","113.264"
+"MX ZAP",NA,NA
+"TW TYN","24.9931","121.301"
+"DK FRE","55.9747","12.4058"
+"CR QPS",NA,NA
+"CH BRN",NA,NA
+"JP STM",NA,NA
+"KR SUO","37.17","126.805"
+"CR SJO","-84.0796","9.9326"
+"FR URO",NA,NA
+"PT OPO","41.1579","-8.6291"
+"PT STA","38.7984","-9.38811"
+"FR URO",NA,NA
+"PE SDR","-12.0977","-77.0273"
+"GH ACC","5.56543","-0.16819"
+"SG SIN","1.35208","103.82"
+"KR USN",NA,NA
+"AR RES",NA,NA
+"PH QZT","15.6835","120.862"
+"JP HDA",NA,NA
+"TW TPE","25.0375","121.564"
+"FR URO",NA,NA
+"NZ WLG","-41.2865","174.776"
+"IT FLR","43.7696","11.2558"
+"IT FLR","43.7696","11.2558"
+"HR ZAG","45.815","15.9819"
+"CO SIJ","9.30457","-75.3906"
+"BR REC","-8.05783","-34.8829"
+"BR RIO","-22.9054","-43.5614"
+"SE VXO","56.8777","14.8091"
+"CH BSL","47.5619","7.5928"
+"SE GOT",NA,NA
+"SE GOT",NA,NA
+"CI ABJ","5.36","-4.0083"
+"JP S67",NA,NA
+"SE GOT",NA,NA
+"SE GOT",NA,NA
+"PT OPO","41.1579","-8.6291"
+"HN TGU","14.1051","-87.2044"
+"SE MRA",NA,NA
+"KR CHC",NA,NA
+"KR CHC",NA,NA
+"SI LJU","46.0569","14.5058"
+"MX CUU","28.6368","-106.076"
+"DK HVV","55.6425","12.4754"
+"TH YNT",NA,NA
+"CL IND","-32.8421","-68.8154"
+"CH BRN",NA,NA
+"CH ZRH","47.3686","8.53918"
+"FR PAR","48.8566","2.35222"
+"JP ODW",NA,NA
+"BR CAN","-29.9133","-51.1862"
+"SE VVK","57.9587","16.3484"
+"NL AMS","52.3702","4.89516"
+"FR URO",NA,NA
+"PT FAO","37.0194","-7.93044"
+"IT ASI","43.0707","12.6196"
+"NL HAG","52.0705","4.3007"
+"PT FAO","37.0194","-7.93044"
+"GB WAN",NA,NA
+"SE GOT",NA,NA
+"SE GOT",NA,NA
+"ES BCN","41.3823","2.1775"
+"SG SIN","1.35208","103.82"
+"CN HAZ",NA,NA
+"CH BRN",NA,NA
+"CR ORE",NA,NA
+"TR DNZ",NA,NA
+"DK FRE","55.9747","12.4058"
+"CD FBM","11","-27"
+"KR TAE",NA,NA
+"EC UIO","-0.2333","-78.5167"
+"TH BKK","13.7712","100.556"
+"IS REY","64.1265","-21.8174"
+"IT PDA","45.4064","11.8768"
+"IT PDA","45.4064","11.8768"
+"MC MON","43.7374","7.42081"
+"IT LCV","43.8399","10.6174"
+"CR CAS",NA,NA
+"AR URA",NA,NA
+"ID BOG","-6.5971","106.806"
+"SE GOT",NA,NA
+"SE GOT",NA,NA
+"GB SUN",NA,NA
+"SE HEL",NA,NA
+"SE GOT",NA,NA
+"SE GOT",NA,NA
+"GB WAN",NA,NA
+"TR IZM",NA,NA
+"ES VIT","42.84","-2.67"
+"KR YOS",NA,NA
+"BR CPS","-22.744","-46.9372"
+"TZ DAR","-6.79235","39.2083"
+"AE DXB","25.2048","55.2708"
+"SE LUD",NA,NA
+"FR NCE","43.7102","7.26195"
+"EC PVO",NA,NA
+"JP SHO",NA,NA
+"AR CCO",NA,NA
+"TH BKK","13.7712","100.556"
+"NZ ROT",NA,NA
+"SE HEL",NA,NA
+"NL HAG","52.0705","4.3007"
+"IN STV",NA,NA
+"CH ZRH","47.3686","8.53918"
+"IN RAJ",NA,NA
+"GB GLW","55.8593","-4.21278"
+"GB SUN",NA,NA
+"KR HWS",NA,NA
+"ES ZAZ","41.6086","-0.88701"
+"JP UKY",NA,NA
+"CH ZRH","47.3686","8.53918"
+"CR DE2",NA,NA
+"BR RIO","-22.9054","-43.5614"
+"FR NCE","43.7102","7.26195"
+"BR CWB","-25.4311","-49.2647"
+"PE SDR","-12.0977","-77.0273"
+"AR RCQ",NA,NA
+"SN DKR","14.7645","-17.366"
+"CR BLN","10.0035","-84.1503"
+"IT BLQ","44.4938","11.3387"
+"NL AMS","52.3702","4.89516"
+"JP HKO",NA,NA
+"DK CPH","55.6761","12.5683"
+"HN TGU","14.1051","-87.2044"
+"SE UME","63.8258","20.263"
+"IT TRN","45.1006","7.668"
+"IT TRN","45.1006","7.668"
+"PH BAG",NA,NA
+"CR SJO","-84.0796","9.9326"
+"MC MON","43.7374","7.42081"
+"CL SCL","-33.4489","-70.6693"
+"NZ DUD",NA,NA
+"JP TOY",NA,NA
+"MX PVR",NA,NA
+"SE UME","63.8258","20.263"
+"BR REC","-8.05783","-34.8829"
+"SE LUD",NA,NA
+"UG KLA",NA,NA
+"BR CWB","-25.4311","-49.2647"
+"AR GCR",NA,NA
+"SE GOT",NA,NA
+"SE GOT",NA,NA
+"CR QPS",NA,NA
+"TZ DAR","-6.79235","39.2083"
+"PT VSE","40.6566","-7.91247"
+"ID BTR",NA,NA
+"GB NTG",NA,NA
+"KR TAE",NA,NA
+"TH BKK","13.7712","100.556"
+"ID BKA",NA,NA
+"CH BSL","47.5619","7.5928"
+"HN TGU","14.1051","-87.2044"
+"BE CRL","50.4108","4.4446"
+"SE KID",NA,NA
+"CH LAU",NA,NA
+"PL WRO","51.1079","17.0385"
+"PL WRO","51.1079","17.0385"
+"PL WRO","51.1079","17.0385"
+"TW KHH","22.6297","120.344"
+"CI COD","5.3602","-3.9674"
+"DK AAR","56.1684","10.1374"
+"JP HIM",NA,NA
+"CL ZCO",NA,NA
+"JP YOK","35.4437","139.638"
+"JP TYO","35.41","139.41"
+"KR TJI",NA,NA
+"PE SDR","-12.0977","-77.0273"
+"AR ROS",NA,NA
+"DK MID","55.471","9.87264"
+"AR ROS",NA,NA
+"SE TRG","55.3751","13.1569"
+"BR FOR","-10.7183","-48.3936"
+"DE BER","52.52","13.405"
+"AU SYD","-33.8675","151.207"
+"NG LOS","6.52437","3.3792"
+"GB BRS",NA,NA
+"BR SSA","-12.973","-38.5023"
+"BR BHZ","-19.9167","-43.9345"
+"PH BAG",NA,NA
+"KR TAE",NA,NA
+"PT OPO","41.1579","-8.6291"
+"GB SUN",NA,NA
+"GB WNE",NA,NA
+"ES BCN","41.3823","2.1775"
+"NZ ROT",NA,NA
+"PE SDR","-12.0977","-77.0273"
+"CR SJO","-84.0796","9.9326"
+"JP HDA",NA,NA
+"ME TGD","42.4304","19.2594"
+"SE LPI","58.4109","15.6216"
+"CH LAU",NA,NA
+"CI ABJ","5.36","-4.0083"
+"ES MAD","40.1076","-3.38756"
+"ZA PZB","-29.6006","30.3794"
+"NZ AKL","-36.8153","174.742"
+"SE HEL",NA,NA
+"ID TRG",NA,NA
+"BR STD",NA,NA
+"CN HAZ",NA,NA
+"KR CHC",NA,NA
+"CH ZRH","47.3686","8.53918"
+"CO MDE","6.22729","-75.5735"
+"ZA CPT","-33.9253","18.4239"
+"BR REC","-8.05783","-34.8829"
+"HK HKG","22.2881","114.14"
+"BR RIO","-22.9054","-43.5614"
+"JP KIJ",NA,NA
+"NZ AKL","-36.8153","174.742"
+"PE SDR","-12.0977","-77.0273"
+"IT FLR","43.7696","11.2558"
+"IT FLR","43.7696","11.2558"
+"JP OKI",NA,NA
+"JP TYO","35.41","139.41"
+"FR URO",NA,NA
+"JP TZK",NA,NA
+"PE SDR","-12.0977","-77.0273"
+"PT FFE","41.4508","-8.17286"
+"NO OSL","59.9139","10.7522"
+"ES VLC","39.4699","-0.3763"
+"ES VIT","42.84","-2.67"
+"FI ES2","60.2055","24.6559"
+"MX TLC",NA,NA
+"NO BGO",NA,NA
+"BO TJA","-21.2666","-63.4884"
+"TZ DAR","-6.79235","39.2083"
+"DK MID","55.471","9.87264"
+"DE BER","52.52","13.405"
+"DK MID","55.471","9.87264"
+"NO ARE","58.4618","8.77245"
+"PT GUI","41.4443","-8.29224"
+"MX HMO","29.0892","-110.961"
+"GB SUN",NA,NA
+"ES BCN","41.3823","2.1775"
+"SE UME","63.8258","20.263"
+"DE BER","52.52","13.405"
+"ES BCN","41.3823","2.1775"
+"VN VCA",NA,NA
+"KR CHC",NA,NA
+"MX MEX","19.4326","-99.1332"
+"GB CDF","51.4816","-3.17909"
+"IS REY","64.1265","-21.8174"
+"SE MMA","55.605","13.0038"
+"BR CAU",NA,NA
+"KR SUO","37.17","126.805"
+"NL NIJ","51.8449","5.84282"
+"CR BLN","10.0035","-84.1503"
+"AU MEL","-37.8141","144.963"
+"LT KLJ",NA,NA
+"ZA CPT","-33.9253","18.4239"
+"DK HVV","55.6425","12.4754"
+"IN KOC","9.93123","76.2673"
+"IT GOA","44.348","9.31841"
+"IT GOA","44.348","9.31841"
+"TR GZT",NA,NA
+"AU ADL","-34.9285","138.601"
+"MX MID","20.9674","-89.5926"
+"SE KID",NA,NA
+"GB BOH","50.7192","-1.88076"
+"JP TSB",NA,NA
+"IT QCS",NA,NA
+"JP IAK",NA,NA
+"TW TNN","22.9999","120.227"
+"CI ABJ","5.36","-4.0083"
+"ZA PRY","-25.7461","28.1881"
+"PE LIM","-12.0433","-77.0283"
+"BG SOF","42.6977","23.3219"
+"IT QCS",NA,NA
+"MA CAS","33.5206","-7.56806"
+"AR BRC",NA,NA
+"GB MNC",NA,NA
+"SE UME","63.8258","20.263"
+"SE HEL",NA,NA
+"AR VNT",NA,NA
+"JP MYJ",NA,NA
+"TR GZT",NA,NA
+"NL NIJ","51.8449","5.84282"
+"SE GOT",NA,NA
+"SE GOT",NA,NA
+"ES BCN","41.3823","2.1775"
+"GB SUN",NA,NA
+"TW KNH",NA,NA
+"DE RSK","54.0887","12.1405"
+"CL ZAL",NA,NA
+"BR SME","-22.8219","-47.2669"
+"IN STV",NA,NA
+"JP ITB",NA,NA
+"BR REC","-8.05783","-34.8829"
+"JP OKI",NA,NA
+"NL RTM","51.9164","4.45093"
+"NL AMS","52.3702","4.89516"
+"CO CTG","10.4218","-75.5501"
+"ID TRG",NA,NA
+"GB WAN",NA,NA
+"AR MDZ","-32.8894","-68.8458"
+"GB MNC",NA,NA
+"TN L8T","36.8725","10.3218"
+"CI COD","5.3602","-3.9674"
+"CI ABJ","5.36","-4.0083"
+"AR CNQ",NA,NA
+"MG TNR","-18.8792","47.5079"
+"PT TVE","38.7637","-9.30148"
+"DK RKE","55.6419","12.0878"
+"CR QPS",NA,NA
+"JP TOY",NA,NA
+"AR CPC",NA,NA
+"CR SJO","-84.0796","9.9326"
+"JP KKJ",NA,NA
+"GE TBS","41.7151","44.8271"
+"JP HKY",NA,NA
+"ES BCN","41.3823","2.1775"
+"CL TLX",NA,NA
+"BR CPS","-22.744","-46.9372"
+"SE GOT",NA,NA
+"SE GOT",NA,NA
+"JO AMM","31.9454","35.9284"
+"DK HLS","56.0308","12.5921"
+"JP IDA",NA,NA
+"ID SUK",NA,NA
+"TZ DAR","-6.79235","39.2083"
+"JP YIH",NA,NA
+"PE SDR","-12.0977","-77.0273"
+"CR DE2",NA,NA
+"CL PRO","-33.4313","-70.6092"
+"EC CUE","-2.90841","-79.0048"
+"KR TAE",NA,NA
+"CR DE2",NA,NA
+"NO SAS",NA,NA
+"DK HLS","56.0308","12.5921"
+"BR REC","-8.05783","-34.8829"
+"SE STO","59.3293","18.0686"
+"TW TNN","22.9999","120.227"
+"JP MYO",NA,NA
+"JP SHO",NA,NA
+"MX CUL",NA,NA
+"GB SUN",NA,NA
+"TR KAD","40.98","29.0585"
+"TW TNN","22.9999","120.227"
+"JP UKY",NA,NA
+"IS REY","64.1265","-21.8174"
+"AR BUE","-34.6037","-58.3816"
+"JP NQU",NA,NA
+"ID SRG",NA,NA
+"BD DAC","23.8103","90.4125"
+"JP IAK",NA,NA
+"SE SKV",NA,NA
+"LV RIX","56.9496","24.1052"
+"TR IST","41.0082","28.9784"
+"JP MYO",NA,NA
+"AR BUE","-34.6037","-58.3816"
+"SE UME","63.8258","20.263"
+"UG KLA",NA,NA
+"SE LUD",NA,NA
+"IT LAQ","42.3505","13.3995"
+"IT LAQ","42.3505","13.3995"
+"DE HEI","49.3988","8.67243"
+"PA OCU",NA,NA
+"GB SUN",NA,NA
+"ES VIT","42.84","-2.67"
+"DK HVV","55.6425","12.4754"
+"TR NIL","40","28"
+"BR PVH","-20.3338","-40.3776"
+"SE LUD",NA,NA
+"GI GIB","36.1408","-5.35359"
+"CI COD","5.3602","-3.9674"
+"JP KKJ",NA,NA
+"PE COM","-11.95","-77.0667"
+"IT MIL","45.8026","9.08635"
+"IT MIL","45.8026","9.08635"
+"JP TSB",NA,NA
+"AU SYD","-33.8675","151.207"
+"MY MUA",NA,NA
+"JP SUI",NA,NA
+"JP S67",NA,NA
+"IT MIL","45.8026","9.08635"
+"IT MIL","45.8026","9.08635"
+"SE SKV",NA,NA
+"IT FLR","43.7696","11.2558"
+"IT FLR","43.7696","11.2558"
+"SI LJU","46.0569","14.5058"
+"ET ADD","9.02887","38.7544"
+"ID BPN","-1.26539","116.831"
+"TW NTC","25.0111","121.446"
+"IT FRR","44.8357","11.619"
+"BR SSA","-12.973","-38.5023"
+"DE BER","52.52","13.405"
+"GB SAA",NA,NA
+"DK RKE","55.6419","12.0878"
+"MX CLY","20.5222","-100.812"
+"TW CYI",NA,NA
+"AR MTC",NA,NA
+"MY MEA",NA,NA
+"JP KNZ",NA,NA
+"BR ARU","-21.2089","-50.4328"
+"DK AAR","56.1684","10.1374"
+"BR SOR","-23.4775","-47.4221"
+"JP YOS",NA,NA
+"JP KKJ",NA,NA
+"BR SSA","-12.973","-38.5023"
+"BR CWB","-25.4311","-49.2647"
+"JP AAK",NA,NA
+"GB SAA",NA,NA
+"SE HEL",NA,NA
+"NZ WLG","-41.2865","174.776"
