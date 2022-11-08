@@ -1312,11 +1312,10 @@ def harmonize_eccc_ghg_inventory(dataDir=None,
     return df_emissionsAgg 
 
 
-
 def harmonize_eucom_emissions(fl=None,
                                     outputDir=None, 
                                     tableName=None,
-                                    dataSourceDictList=None):
+                                    datasourceDict=None):
     # set default path
     if fl is None:
         fl = '/Users/luke/Documents/work/data/EUCoM/raw/EUCovenantofMayors2022_clean_NCI_7Jun22.csv'
@@ -1325,7 +1324,7 @@ def harmonize_eucom_emissions(fl=None,
     assert isinstance(fl, str), f"fl must be a string"
     assert isinstance(outputDir, str), f"outputDir must a be string"
     assert isinstance(tableName, str), f"tableName must be a string"
-    assert isinstance(dataSourceDictList, list), f"dataSourceDictList must be a list"
+    assert isinstance(datasourceDict, dict), f"datasourceDict must be a list"
 
     # output directory
     out_dir = Path(outputDir).as_posix()
@@ -1447,39 +1446,50 @@ def harmonize_eucom_emissions(fl=None,
     })
 
 
+    # TODO: tag the primary datasource for eacy record
+    # Commented out code is to get primary datasource for each record
+    # not necessary for right now
+    
     # long to short data_source_name
-    shortDatasourceNameDict = {
-        'EUCovenantofMayors2022': 'EUCoM', 
-        'GCoMEuropeanCommission2021': 'GCoMEC', 
-        'GCoMHarmonized2021': 'GCoMH'
-    }
+    #shortDatasourceNameDict = {
+    #    'EUCovenantofMayors2022': 'EUCoM', 
+    #    'GCoMEuropeanCommission2021': 'GCoMEC', 
+    #    'GCoMHarmonized2021': 'GCoMH'
+    #}
 
     # condition one column on another (https://datagy.io/pandas-conditional-column/)
-    df['data_source_short'] = df['data_source'].map(shortDatasourceNameDict)
+    #df['data_source_short'] = df['data_source'].map(shortDatasourceNameDict)
 
 
 
     # TODO: add check to make sure values match dict
     # datasource id dictionary
-    datasource_id_dict = {
-        'EUCovenantofMayors2022': 'EUCoM:2022', 
-        'GCoMEuropeanCommission2021': 'GCoMEC:v2', 
-        'GCoMHarmonized2021': 'GCoMH:2021'
-    }
+    #datasource_id_dict = {
+    #    'EUCovenantofMayors2022': 'EUCoM:2022', 
+    #    'GCoMEuropeanCommission2021': 'GCoMEC:v2', 
+    #    'GCoMHarmonized2021': 'GCoMH:2021'
+    #}
 
 
-    assert all(x in [dataSourceDict['datasource_id'] for dataSourceDict in dataSourceDictList]  
-               for x in list(datasource_id_dict.values())), (
-        f"Some keys in datasource_id_dict do not match dataSourceDictList"
-    )
+    #assert all(x in [dataSourceDict['datasource_id'] for dataSourceDict in dataSourceDictList]  
+    #           for x in list(datasource_id_dict.values())), (
+    #    f"Some keys in datasource_id_dict do not match dataSourceDictList"
+    #)
 
-    df['datasource_id'] = df['data_source'].map(datasource_id_dict)
+    #df['datasource_id'] = df['data_source'].map(datasource_id_dict)
+    
 
+    # create id columns
+    df['datasource_id'] = datasourceDict['datasource_id']
 
-    # create emissions_id columns
     df['emissions_id'] = df.apply(lambda row: 
-                                  f"{row['data_source_short']}:{row['actor_id']}:{row['year']}",
-                                  axis=1)
+                              f"DDL-EUCoM:{row['actor_id']}:{row['year']}", 
+                              axis=1)
+    
+    # create emissions_id columns
+    #df['emissions_id'] = df.apply(lambda row: 
+    #                              f"{row['data_source_short']}:{row['actor_id']}:{row['year']}",
+    #                              axis=1)
 
 
     # Create EmissionsAgg table
@@ -1509,7 +1519,6 @@ def harmonize_eucom_emissions(fl=None,
     df_emissionsAgg.to_csv(f'{out_dir}/{tableName}.csv', index=False)
 
     return df
-
 
 
 def match_locode_to_climactor():
@@ -1683,7 +1692,7 @@ def harmonize_epa_state_ghg(dataDir=None,
 def harmonize_eucom_pledges(fl=None,
                             outputDir=None, 
                             tableName=None,
-                            dataSourceDictList=None):
+                            datasourceDict=None):
     # set default path
     if fl is None:
         fl = '/Users/luke/Documents/work/data/EUCoM/raw/EUCovenantofMayors2022_clean_NCI_7Jun22.csv'
@@ -1692,7 +1701,7 @@ def harmonize_eucom_pledges(fl=None,
     assert isinstance(fl, str), f"fl must be a string"
     assert isinstance(outputDir, str), f"outputDir must a be string"
     assert isinstance(tableName, str), f"tableName must be a string"
-    assert isinstance(dataSourceDictList, list), f"dataSourceDictList must be a list"
+    assert isinstance(datasourceDict, dict), f"datasourceDict must be a list"
 
     # output directory
     out_dir = Path(outputDir).as_posix()
@@ -1833,38 +1842,42 @@ def harmonize_eucom_pledges(fl=None,
     })
 
 
+    
     # long to short data_source_name
-    shortDatasourceNameDict = {
-        'EUCovenantofMayors2022': 'EUCoM', 
-        'GCoMEuropeanCommission2021': 'GCoMEC', 
-        'GCoMHarmonized2021': 'GCoMH'
-    }
+    #shortDatasourceNameDict = {
+    #    'EUCovenantofMayors2022': 'EUCoM', 
+    #    'GCoMEuropeanCommission2021': 'GCoMEC', 
+    #    'GCoMHarmonized2021': 'GCoMH'
+    #}
 
     # condition one column on another (https://datagy.io/pandas-conditional-column/)
-    df['data_source_short'] = df['data_source'].map(shortDatasourceNameDict)
+    #df['data_source_short'] = df['data_source'].map(shortDatasourceNameDict)
 
 
 
     # TODO: add check to make sure values match dict
     # datasource id dictionary
-    datasource_id_dict = {
-        'EUCovenantofMayors2022': 'EUCoM:2022', 
-        'GCoMEuropeanCommission2021': 'GCoMEC:v2', 
-        'GCoMHarmonized2021': 'GCoMH:2021'
-    }
+    #datasource_id_dict = {
+    #    'EUCovenantofMayors2022': 'EUCoM:2022', 
+    #    'GCoMEuropeanCommission2021': 'GCoMEC:v2', 
+    #    'GCoMHarmonized2021': 'GCoMH:2021'
+    #}
 
 
-    assert all(x in [dataSourceDict['datasource_id'] for dataSourceDict in dataSourceDictList]  
-               for x in list(datasource_id_dict.values())), (
-        f"Some keys in datasource_id_dict do not match dataSourceDictList"
-    )
+    #assert all(x in [dataSourceDict['datasource_id'] for dataSourceDict in dataSourceDictList]  
+    #           for x in list(datasource_id_dict.values())), (
+    #    f"Some keys in datasource_id_dict do not match dataSourceDictList"
+    #)
 
-    df['datasource_id'] = df['data_source'].map(datasource_id_dict)
+    #df['datasource_id'] = df['data_source'].map(datasource_id_dict)
 
-
+    # create id columns
+    df['datasource_id'] = datasourceDict['datasource_id']
+    
+    
     # create emissions_id columns
     df['target_id'] = df.apply(lambda row: 
-                                  f"{row['data_source_short']}:EUCoM_pledge:{row['actor_id']}",
+                                  f"DDL-EUCoM:EUCoM_pledge:{row['actor_id']}",
                                   axis=1)
 
 
