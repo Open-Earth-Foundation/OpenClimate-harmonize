@@ -2060,3 +2060,240 @@ def harmonize_us_climate_alliance_pledge(outputDir=None,
 
     # convert to csv
     df_out.to_csv(f'{out_dir}/{tableName}.csv', index=False)
+
+    
+    
+def harmonize_cdp2022_states_regions(fl=None, datasourceDict=None):
+    # load raw data
+    #fl = '/Users/luke/Documents/work/data/CDP/2022/2022_Full_States_and_Regions_Dataset.csv'
+    df = pd.read_csv(fl)
+
+    # select Assessment
+    filt = (df['Parent Section'] == 'Assessment') & (df['Section'] == '2. Emissions Inventory')
+    df = df.loc[filt]
+
+    # list to concatenate to
+    concat_list = []
+
+    for subnat in set(df['Organization Name']):
+
+        filt = df['Organization Name'] == subnat
+        df_tmp = df.loc[filt]
+        df_tmp = df_tmp[['Country', 'Column Name','Row Number', 'Response Answer']]
+
+        filt = ~df_tmp['Column Name'].isna()
+        df_tmp = df_tmp.loc[filt]
+
+        # get country name
+        (country,) = set(df_tmp['Country'])
+
+        column_names = [
+            'Boundary of inventory relative to jurisdiction boundary',
+        #    'Comment',
+            'Community-wide inventory attachment (spreadsheet) and/or link (with unrestricted access)',
+            'Emissions (metric tonnes CO2e)',
+        #    'Gases included in inventory',
+            'Inventory year',
+            'Population in inventory year',
+            'Primary methodology/framework to compile inventory',
+            'Scope',
+            'Sector',
+        #    'Source of Global Warming Potential values',
+            'Status of community-wide inventory attachment and/or direct link',
+        #    'Sub-sector'
+        ]
+
+        df_out = pd.concat([pd.pivot(df_tmp.loc[(df_tmp['Row Number'] == row_number) & (df_tmp['Column Name'].isin(column_names))],   
+                         index = 'Row Number', 
+                         columns = 'Column Name',
+                         values = 'Response Answer') for row_number in set(df_tmp['Row Number'])])
+
+        df_out.index.name = None
+
+        inventory_year = (
+            df_out.loc[~df_out['Inventory year'].isna(), 
+                       'Inventory year']
+            .to_string(index=False)
+        )
+        population = (
+            df_out.loc[~df_out['Population in inventory year'].isna(),
+                       'Population in inventory year']
+            .to_string(index=False)
+        )
+
+        attachment = (
+            df_out.loc[~df_out['Community-wide inventory attachment (spreadsheet) and/or link (with unrestricted access)'].isna(),
+                       'Community-wide inventory attachment (spreadsheet) and/or link (with unrestricted access)']
+            .to_string(index=False)
+        )
+
+
+        methodology = (
+            df_out.loc[~df_out['Primary methodology/framework to compile inventory'].isna(),
+                       'Primary methodology/framework to compile inventory']
+            .to_string(index=False)
+        )
+
+        boundary = (
+            df_out.loc[~df_out['Boundary of inventory relative to jurisdiction boundary'].isna(),
+                       'Boundary of inventory relative to jurisdiction boundary']
+            .to_string(index=False)
+        )
+
+        inventory_status = (
+            df_out.loc[~df_out['Status of community-wide inventory attachment and/or direct link'].isna(),
+                       'Status of community-wide inventory attachment and/or direct link']
+            .to_string(index=False)
+        )
+
+        df_out['subnational'] = subnat
+        df_out['country'] = country
+        df_out['year'] = inventory_year
+        df_out['population'] = population
+        df_out['community_inventory_attachment'] = attachment
+        df_out['boundary_of_inventory'] = boundary
+        df_out['invetory_status'] = inventory_status
+        df_out['methodology'] = methodology
+        
+        scopes = [
+            'Scope 1',
+            'Scope 2',
+            'Total figure',
+            'Scope 1 and 2',
+        ]
+
+        sectors = [
+            'Agriculture, Forestry and other land use (AFOLU)',
+            'Other, please specify: Afforestation and Deforestation',
+            'Other, please specify: LULUCF',
+            'Other, please specify: Land use, land use change and forestry',
+            'Other, please specify: Mudanças do Uso da Terra e Florestas',
+        ]
+        
+        # only select scopes and sectors
+        df_out = df_out.loc[df_out['Scope'].isin(scopes)]
+        df_out = df_out.loc[~df_out['Sector'].isin(sectors)]
+
+        # only select these columns
+        columns = [
+            'country',
+            'subnational',
+            'Emissions (metric tonnes CO2e)',
+            'year',
+            'Scope',
+            'Sector',
+            'population',
+            'community_inventory_attachment',
+            'boundary_of_inventory',
+            'invetory_status',
+            'methodology'
+        ]
+
+        df_out = df_out[columns]
+        
+        # filter out nans in emissions
+        filt = ~df_out['Emissions (metric tonnes CO2e)'].isna()
+        df_out = df_out.loc[filt]
+        
+        # drop records without an inventory year
+        # the Series([], )' thing is because I set the year above
+        df_out = df_out.loc[~(df_out['year']=='Series([], )')]
+
+        # replace years like 2018/2019 with the last year listed
+        filt = df_out['year'].str.contains('/')
+        df_out.loc[filt, 'year'] = (df_out.loc[df_out['year'].str.contains('/'), 'year']
+                                                                .str
+                                                                .extract(r'[0-9]{4}/([0-9]{4})')[0]
+                                                                .values
+                                                                .tolist()
+                                                               )
+        concat_list.append(df_out)
+        
+    # concat them all together
+    df_out = pd.concat(concat_list, ignore_index=True)
+
+    # filter out NaN, "question not application", and <0
+    filt = (
+        (~df_out['Emissions (metric tonnes CO2e)'].isna()) & 
+        (df_out['Emissions (metric tonnes CO2e)'] != 'Question not applicable') 
+    )
+    df_filt = df_out.loc[filt]
+
+    # filter out where emissions < 0
+    filt = (df_filt['Emissions (metric tonnes CO2e)'].astype(float) > 0)
+    df_filt = df_filt.loc[filt]
+
+    # make emissions be float
+    df_filt['Emissions (metric tonnes CO2e)'] = df_filt['Emissions (metric tonnes CO2e)'].astype(float)
+
+    # aggregate emissions
+    df_agg = df_filt.groupby(by=['subnational'], as_index=False)['Emissions (metric tonnes CO2e)'].sum()
+
+    # merge in the year from df_filt
+    df_agg = pd.merge(df_agg, df_filt[['subnational', 'year']].drop_duplicates(), 
+         left_on='subnational', 
+         right_on='subnational', 
+         how='left')
+    
+    # drop records with years such as 2018/2019
+    #filt = ~df_agg['year'].str.contains('/')
+    #df_agg = df_agg.loc[filt]
+
+    # Now need to find the ISO code for each subnational
+    fl = 'https://raw.githubusercontent.com/datadrivenenvirolab/ClimActor/master/data-raw/key_dict_7Sep2022.csv'
+    df_clim = pd.read_csv(fl).drop_duplicates()
+    df_clim = df_clim.loc[df_clim['entity_type'].isin([ 'Region', 'nan'])]
+
+    # name harmonize
+    df_agg['subnational_harmonized'] = (
+        df_agg['subnational']
+        .replace(to_replace = list(df_clim['wrong']),
+                 value = list(df_clim['right']))
+    )
+
+    # read ISO-3166
+    df_sub = pd.read_csv('https://raw.githubusercontent.com/Open-Earth-Foundation/OpenClimate-ISO-3166/main/ISO-3166-2/ActorName.csv')
+
+    # name harmonize ISO-3166
+    df_sub['name_harmonized'] = (
+        df_sub['name']
+        .replace(to_replace = list(df_clim['wrong']),
+                 value = list(df_clim['right']))
+    )
+
+    # final table
+    df_final = pd.merge(df_agg, df_sub, left_on=["subnational_harmonized"], right_on=["name_harmonized"], how="left")
+
+    # remove nan actor ids
+    df_final = df_final.loc[~df_final['actor_id'].isna()]
+
+    # rename emissions
+    df_final = df_final.rename(columns={'Emissions (metric tonnes CO2e)':'total_emissions'})
+
+    # only pick out emissions and actor id and year
+    #df_final = df_final[['total_emissions', 'actor_id', 'year']]
+
+    # add IDs
+    df_final['datasource_id'] = datasourceDict['datasource_id']
+
+    df_final['emissions_id'] = df_final.apply(lambda row: 
+                                  f"CD_Full_states_regions:2022:{row['actor_id']}:{row['year']}", 
+                                  axis=1)
+
+    # ensure data has correct types
+    df_final = df_final.astype(
+        {
+        'emissions_id': str,
+        'actor_id': str,
+        'year': int,
+        'total_emissions': int,
+        'datasource_id': str
+        }
+    )
+
+    df_final = df_final[['emissions_id', 'actor_id', 'year', 'total_emissions', 'datasource_id']]
+
+    # sort by actor_id and year
+    df_final = df_final.sort_values(by=['actor_id', 'year'])
+    
+    return df_final
