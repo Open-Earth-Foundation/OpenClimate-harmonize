@@ -1,4 +1,2 @@
 datasource_id,name,publisher,published,URL
-EUCoM:2022,European Union Covenant of Mayors 2022,EUCoM,2022,https://www.eumayors.eu/en/
-GCoMEC:v2,"Global Covenant of Mayors - MyCovenant, 2021, Second release",EC-JRC,2021,https://data.jrc.ec.europa.eu/dataset/9cefa6ca-1391-4bcb-a9c8-46e029cf99bb
-GCoMH:2021,"A dataset of GHG emissions for 6,200 cities in Europe and the Southern Mediterranean countries",EC-JRC,2021,https://data.jrc.ec.europa.eu/dataset/57a615eb-cfbc-435a-a8c5-553bd40f76c9
+DDL:EUCoM-compilation:2022,DDL EUCoM compilation,DDL,2022-01-01,https://datadrivenlab.org/
