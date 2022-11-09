@@ -3,7 +3,7 @@ import requests
 
 apihost = None
 INPUT_FILE = "source/World-Bank-Population-Subnational/World-Bank-Population-Subnational.csv"
-OUTPUT_DIR = "data_contextual/subnational/population/OEF:WD:subnational-population:20221106"
+OUTPUT_DIR = "data_contextual/subnational/population/OEF:WB:subnational-population:20221106"
 
 PUBLISHER = {
     "id": "OEF:WB",
